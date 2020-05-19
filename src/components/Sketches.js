@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 //import {ReactP5Wrapper as P5} from 'p5wrappers'
-import NewSketch from './components/MySketch'
+import NewSketch from './NewSketch'
 
 export default function Sketches () {
 //const [sketch, setMySketch] = useState(mySketch)

@@ -2,6 +2,18 @@ import React from 'react';
 import p5 from 'p5';
 import 'p5/lib/addons/p5.sound';
 import 'p5/lib/addons/p5.dom';
+import hhSound from '../samples/hh.wav'
+import kSound from '../samples/k.wav'
+import o1Sound from '../samples/o1.wav'
+import o2Sound from '../samples/o2.wav'
+import o3Sound from '../samples/o3.wav'
+import o4Sound from '../samples/o4.wav'
+import o5Sound from '../samples/o5.wav'
+import o6Sound from '../samples/o6.wav'
+import sSound from '../samples/s.wav'
+
+
+
 //import './../lib/P5-Speech'
 //import './../lib/Sound'
 //import './../lib/P5-Speech'
@@ -15,7 +27,9 @@ class NewSketch extends React.Component {
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
-
+        this.state = {
+            isLoading: true
+        }
     }
 
     componentDidMount() {
@@ -23,6 +37,7 @@ class NewSketch extends React.Component {
     }
 
     sketch = (p) => {
+        const self = this;
 
         let cnv = null
 
@@ -53,7 +68,7 @@ class NewSketch extends React.Component {
 
         p.setup = () => {
 
-            //p.getAudioContext().suspend()
+            p.getAudioContext().suspend()
 
             // CANVAS 
             cnv = p.createCanvas(700, 700)
@@ -82,31 +97,31 @@ class NewSketch extends React.Component {
             recordButton.parent('#bcc')
             // LOADINg SOUNDS
 
-            hh = p.loadSound('/samples/hh.wav', () => {
+            hh = p.loadSound(hhSound, () => {
                 drums.loop()
             })
-            k = p.loadSound('/samples/k.wav', () => {
+            k = p.loadSound(kSound, () => {
                 drums.loop()
             })
-            s = p.loadSound('/samples/s.wav', () => {
+            s = p.loadSound(sSound, () => {
                 drums.loop()
             })
-            o1 = p.loadSound('/samples/o1.wav', () => {
+            o1 = p.loadSound(o1Sound, () => {
                 drums.loop()
             })
-            o2 = p.loadSound('/samples/o2.wav', () => {
+            o2 = p.loadSound(o2Sound, () => {
                 drums.loop()
             })
-            o3 = p.loadSound('/samples/o3.wav', () => {
+            o3 = p.loadSound(o3Sound, () => {
                 drums.loop()
             })
-            o4 = p.loadSound('/samples/o4.wav', () => {
+            o4 = p.loadSound(o4Sound, () => {
                 drums.loop()
             })
-            o5 = p.loadSound('/samples/o5.wav', () => {
+            o5 = p.loadSound(o5Sound, () => {
                 drums.loop()
             })
-            o6 = p.loadSound('/samples/o6.wav', () => {
+            o6 = p.loadSound(o6Sound, () => {
                 drums.loop()
             })
 
@@ -195,7 +210,7 @@ class NewSketch extends React.Component {
             sn = p.floor(p.random(perDistSnare))
             if (p.mouseX < p.width / 2 && p.mouseY < p.height / 2) { // Left - Up -- Hh
                 p.fill(123, 12, 234)
-                p.ellipse(p.mouseX, p.mouseY, p.ranC, p.ranC)
+                p.ellipse(p.mouseX, p.mouseY, ranC, ranC)
                 hPat.push(i)
                 console.log(`h added ${hPat}`);
             } else if (p.mouseX > p.width / 2 && p.mouseY < p.height / 2) { // Right - Up -- Kick
@@ -210,7 +225,7 @@ class NewSketch extends React.Component {
                 console.log(`s added ${sPat}`);
             } else if (p.mouseX > p.width / 2 && p.mouseY > p.height / 2) { // right - Down - synths
                 p.fill(223, 222, 34)
-                p.ellipse(p.mouseX, p.mouseY, p.ranC, p.ranC)
+                p.ellipse(p.mouseX, p.mouseY, ranC, ranC)
                 chosen.push(i)
                 console.log(`sint added ${chosen}`);
             }
@@ -229,7 +244,11 @@ class NewSketch extends React.Component {
         }
 
         p.draw = () => {
-
+            if(!self.state.isLoading){
+                self.setState({
+                    isLoading:false
+                })
+            } else {
             p.frameRate(17);
             // get the overall volume (between 0 and 1.0)
             let vol = mic.getLevel() * 25;
@@ -259,6 +278,7 @@ class NewSketch extends React.Component {
                 p.arc(vol * 4400, p.random(300), 700, 70, p.PI, p.PI + p.QUARTER_PI);
                 p.arc(vol * 444, vol * 444, vol * 444, vol * 444, p.PI + p.QUARTER_PI, p.TWO_PI);
             }
+        }
         }
 
         // p.processRita = () => {
@@ -343,7 +363,16 @@ class NewSketch extends React.Component {
     }
 
     render() {
-        return ( <div id = "canvas" className = "canvas" ref = {this.myRef}/>)
+        return (
+
+        <>
+        { this.state.isLoading 
+         ? 'loading'
+         : <div id = "canvas" className= "canvas" ref = {this.myRef}/>
+         }
+
+        </>
+        )
     }
 }
 
