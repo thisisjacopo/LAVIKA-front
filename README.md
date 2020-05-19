@@ -1,43 +1,47 @@
-kara - NO - ke
+NSRVK
+Non-Sense-Randrum-Visual-Karaoke
+cause we suck at naming stuff
 
 Description
-Lazy days at home are officially over. ExcersAIze is a project based on an Artificial Intelligence algorithm which recognizes objects within an image input. The idea is for the user to upload a picture, and based on the recognition of the algorythm, get different excercise routines. The user will also be able to save said routines and mix them together to create new ones, as-well as sharing them with other users!
+NSRVK is an app that lets you create music and visuals through a canvas. Shapes, sounds and canvas settings all render in real time across your screen. This all comes with a little twist, a lyric with absolutely no sense which you can sing along to and record your beautifully produced song.
 
 User Stories
-* 404 
-* mainpage - logo and brief explanation of the project.
-* homepage - Main functionality of the project, instructions and navbar for login signup and about. Able to see app but have to log in to try it.
-* sign up - Signup 
-* login - Login
-* logout - logout for security.
-* routine list - Where excercising routines will be displayed, with the possibility to mix them and make new routines
-* about - about the app
-
+* 404 
+* mainpage -  Animation.
+* XP - Main functionality of the project, canvas and knobs (sliders and a button to record) and a button to save the song
+* sign up - Signup 
+* login - Login
+* logout - logout for security.
+* about - about the app
+​
 Backlog
-List of other features outside of the MVPs scope
+* Record the visuals together with the songs
+* Make more than one option of visual
+* Create a community to share songs between users
+​
 User profile:
+​
 * see profile
 * upload profile picture
 * update profile info
-* see other users profile
-* list of routines
-* edit routines and make new ones
-Video chat:
-* connect with other users to excercise together
-* create videochat groups to make excercising groups
-* stream same music
+* list of songs
+​
+
 
 ROUTES:
-* GET /main
-    * renders the mainpage
+​
+* GET /main 
+    * renders the main page
 * GET /home
     * renders the homepage
-    * button begins experience and smooth scroll if logged in
+    * button redirects to sign-up
     * button redirects to log-in
 * GET /about
     * renders about
-* POST /home
-    * adds exercise to routines with a + button
+* GET /xp
+    * renders the main feature: canvas and knobs
+* POST /xp
+    * adds a song to the profile
 * GET /auth/signup
     * renders the signup form
 * POST /auth/signup
@@ -51,12 +55,12 @@ ROUTES:
 * POST /auth/login
     * does not display if user is logged in
     * body:
-        * username
+        * email
         * password
 * GET /auth/logout
         * destroy session
-* GET /personal
-    * displays profile and routines
+* GET /profile
+    * displays profile and songs
 * GET /personal/edit
     * renders edit page
 * POST /personal/edit
@@ -65,39 +69,29 @@ ROUTES:
         * username
         * profile picture
         * email
-* GET /personal/routine
-    * renders every routine page
-* POST /personal/routine
-    * body:
-        * excercises
-    * button to delete excercise or move to another routine
+        * Songs
 
 User model
-
+​
 username: String,
 email: String,
 password: String,
 imgName: String,
 imgPath: String,
-routines: [{type: Schema.Types.ObjectId, ref: 'Routine'}]
-
-
-Routine model
-
-name: String,
-outines: [{type: Schema.Types.ObjectId, ref: 'Excercise'}],
-description: String
-
-
-Excercise model
-
+songs: [{type: Schema.Types.ObjectId, ref: 'Song'}]
+​
+​
+Songs model
+​
 name: String,
 description: String,
-type: String,
-imgPath: String
+urlPath:String
+​
+
 
 Github
-https://github.com/yolaresofia/project-module-two
+https://github.com/yolaresofia/randrum
+
 
 Trello
-https://trello.com/b/OluXJkN6/excersaize-app
+https://trello.com/b/Eok4Byw8/novika
