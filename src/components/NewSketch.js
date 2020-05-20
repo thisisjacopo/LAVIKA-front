@@ -205,12 +205,12 @@ class NewSketch extends React.Component {
         p.addIns = () => {
             let chosen = p.random(arrOfSin)
             i = p.floor(p.random(perDist))
-            let ranC = p.random(255)
+            let ranC = p.random(255) // piks a random value between 0 and 255
             ki = p.floor(p.random(perDistKick))
             sn = p.floor(p.random(perDistSnare))
             if (p.mouseX < p.width / 2 && p.mouseY < p.height / 2) { // Left - Up -- Hh
-                p.fill(123, 12, 234)
-                p.ellipse(p.mouseX, p.mouseY, ranC, ranC)
+                p.fill(123, 12, 234) // fills the color of the ellipse
+                p.ellipse(p.mouseX, p.mouseY, ranC, ranC) // 
                 hPat.push(i)
                 console.log(`h added ${hPat}`);
             } else if (p.mouseX > p.width / 2 && p.mouseY < p.height / 2) { // Right - Up -- Kick

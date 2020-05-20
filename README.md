@@ -1,9 +1,7 @@
-NSRVK
-Non-Sense-Randrum-Visual-Karaoke
-cause we suck at naming stuff
+LAVIKA
 
-Description
-NSRVK is an app that lets you create music and visuals through a canvas. Shapes, sounds and canvas settings all render in real time across your screen. This all comes with a little twist, a lyric with absolutely no sense which you can sing along to and record your beautifully produced song.
+
+LAVIKA is an app that lets you create music and visuals through a canvas. Shapes, sounds and canvas settings all render in real time across your screen. This all comes with a little twist, a lyric with absolutely no sense which you can sing along to and record your beautifully produced song.
 
 User Stories
 * 404 
@@ -90,7 +88,8 @@ urlPath:String
 
 
 Github
-https://github.com/yolaresofia/randrum
+https://github.com/yolaresofia/NSRVK-front
+https://github.com/yolaresofia/NSRVK-back
 
 
 Trello
