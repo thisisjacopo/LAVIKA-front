@@ -5,10 +5,12 @@ import Navbar from "./components/Navbar";
 import xp from "./pages/Xp";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Comunity from "./pages/Comunity";
 //import Private from "./pages/Private";
 import Home from "./pages/Home";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
+import SongsContextProvider from "./contexts/SongsContext";
 
 function App() {
   return (
@@ -19,6 +21,9 @@ function App() {
         <PublicRoute exact path="/signup" component={Signup} />
         <PublicRoute exact path="/login" component={Login} />
         <PrivateRoute exact path="/xp" component={xp} />
+        <SongsContextProvider>
+        <PrivateRoute exact path="/comunity" component={Comunity} />
+        </SongsContextProvider>
       </Switch>
     </div>
   );

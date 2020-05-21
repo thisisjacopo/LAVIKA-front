@@ -16,9 +16,14 @@ class Navbar extends Component {
         {
           isLoggedIn
             ? <div className="navbar-btns">
-              <p>{user.username}</p>
+              <Link to={'/profile'} id='profile-btn'>
+                <h4>{user.username}</h4>
+              </Link>
               <Link to={'/xp'} id='xp-btn'>
               <h4>XP</h4>
+               </Link>
+              <Link to={'/comunity'} id='comunity-btn'>
+              <h4>COMUNITY</h4>
                </Link>
               <button onClick={logout}> Logout </button>
             </div>
