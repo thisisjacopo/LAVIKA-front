@@ -11,7 +11,7 @@ import o4Sound from '../samples/o4.wav'
 import o5Sound from '../samples/o5.wav'
 import o6Sound from '../samples/o6.wav'
 import sSound from '../samples/s.wav'
-
+import rita from 'rita';
 
 
 //import './../lib/P5-Speech'
@@ -40,7 +40,7 @@ class NewSketch extends React.Component {
         const self = this;
 
         let cnv = null
-
+        let nouns = ['actor', 'gold', 'Painting', 'advertisement', 'grass', 'Parrot', 'afternoon', 'greece', 'Pencil', 'airport', 'guitar', 'Piano', 'ambulance', 'Hair', 'Pillow', 'animal', 'Hamburger', 'Pizza', 'answer', 'Helicopter', 'Planet', 'apple', 'Helmet', 'Plastic', 'army', 'Holiday', 'Portugal', 'australia', 'Honey', 'Potato', 'Balloon', 'Horse', 'Queen', 'Banana', 'Hospital', 'Quill', 'Battery', 'House', 'Rain', 'Beach', 'Hydrogen', 'Rainbow', 'Beard', 'Ice', 'Raincoat', 'Bed', 'Insect', 'Refrigerator', 'Belgium', 'Insurance', 'Restaurant', 'Boy', 'Iron', 'River', 'Branch', 'Island', 'Rocket', 'Breakfast', 'Jackal', 'Room', 'Brother', 'Jelly', 'Rose', 'Camera', 'Jewellery', 'Russia', 'Candle', 'Jordan', 'Sandwich', 'Car', 'Juice', 'School', 'Caravan', 'Kangaroo', 'Scooter', 'Carpet', 'King', 'Shampoo', 'Cartoon', 'Kitchen', 'Shoe', 'China', 'Kite', 'Soccer', 'Church', 'Knife', 'Spoon', 'Crayon', 'Lamp', 'Stone', 'Crowd', 'Lawyer', 'Sugar', 'Daughter', 'Leather', 'Sweden', 'Death', 'Library', 'Teacher', 'Denmark', 'Lighter', 'Telephone', 'Diamond', 'Lion', 'Television', 'Dinner', 'Lizard', 'Tent', 'Disease', 'Lock', 'Thailand', 'Doctor', 'London', 'Tomato', 'Dog', 'Lunch', 'Toothbrush', 'Dream', 'Machine', 'Traffic', 'Dress', 'Magazine', 'Train', 'Easter', 'Magician', 'Truck', 'Egg', 'Manchester', 'Uganda', 'Eggplant', 'Market', 'Umbrella', 'Egypt', 'Match', 'Van', 'Elephant', 'Microphone', 'Vase', 'Energy', 'Monkey', 'Vegetable', 'Engine', 'Morning', 'Vulture', 'England', 'Motorcycle', 'Wall', 'Evening', 'Nail', 'Whale', 'Eye', 'Napkin', 'Window', 'Family', 'Needle', 'Wire', 'Finland', 'Nest', 'Xylophone', 'Fish', 'Nigeria', 'Yacht', 'Flag', 'Night', 'Yak', 'Flower', 'Notebook', 'Zebra', 'Football', 'Ocean', 'Zoo', 'Forest', 'Oil', 'garden', 'Fountain', 'Orange', 'gas', 'France', 'Oxygen', 'girl', 'Furniture', 'Oyster', 'glass', 'garage', 'ghost']
         let hh, k, s, hPhrase, hPat, drums, arrOfSin, mic, input1, button1, lexicon, speakButton, recordButton;
         let recorder, soundFile, o1, o2, o3, o4, o5, o6, kPat, sPat, o1Pat, o2Pat, o3Pat, o4Pat, o5Pat, o6Pat;
         let kPhrase, sPhrase, o1Phrase, o2Phrase, o3Phrase, o4Phrase, o5Phrase, o6Phrase, bpmCtr, i, ki, sn;
@@ -48,14 +48,14 @@ class NewSketch extends React.Component {
         let state = 0;
         //deleted array of words to replace Chevrolet
 
-        //let poem = ''
+        let poem = ''
 
-        //let wordsSeparated = []
-        //let mainInfo = document.getElementById('mainInfo')
-        //let myVoice = new p5.Speech()
-        //let x = 0.2
-        //let noiseScale = 0.02;
-        //let inx = 0;
+        let wordsSeparated = []
+        let mainInfo = document.getElementById('mainInfo')
+        // let myVoice = new p5.Speech()
+        let x = 0.2
+        let noiseScale = 0.02;
+        let inx = 0;
 
         //perDist per instrument
         let perDist = [0, 0, 0, 0, 0, 1]
@@ -79,14 +79,14 @@ class NewSketch extends React.Component {
             mic.start();
 
             ///  speach button
-            // speakButton = p.createButton('speak')
-            // speakButton.mousePressed(p.speakWords)
-            // speakButton.parent('#bcc')
+            speakButton = p.createButton('speak')
+            speakButton.mousePressed(p.speakWords)
+            speakButton.parent('#bcc')
 
             // get data buton
-            // let getArticleBtn = p.createButton('get data')
-            // getArticleBtn.mousePressed(p.getArticle)
-            // getArticleBtn.parent('#bcc')
+            let getArticleBtn = p.createButton('get data')
+            getArticleBtn.mousePressed(getArticle)
+            getArticleBtn.parent('#bcc')
             //record Setup
 
             recordButton = p.createButton('record')
@@ -192,14 +192,7 @@ class NewSketch extends React.Component {
             ////////////////////////
 
 
-            // lexicon = new p5.RiLexicon()
-            // input1 = p.createInput("there was a blissy day");
-            // button1 = p.createButton("submit");
-            // button1.mousePressed(p.processRita)
-            // input1.size(200)
-
-            // input1.parent('#bcc')
-            // button1.parent('#bcc')
+          
         }
 
         p.addIns = () => {
@@ -281,66 +274,36 @@ class NewSketch extends React.Component {
         }
         }
 
-        // p.processRita = () => {
-        //     let s = input1.value()
-        //     let rs = new p5.RiString(s)
-        //     let words = rs.words()
-        //     let pos = rs.pos()
+        const getArticle = async () => {
+            let poem = ''
+            let articleRaw = `http://poetrydb.org//author/emerson`
+            const response = await fetch(articleRaw);
+            const article1 = await response.json();
+            let lines = p.random(article1).lines
+            lines.forEach(x => poem += x)
+            let rs = new rita.RiString(poem)
+            let words = rs.words()
+            let pos = rs.pos()
 
-        //     let result = ' '
-        //     for (let i = 0; i < words.length; i++) {
-        //         let word = words[i]
-        //         if (/nn.*/.test(pos[i])) {
-        //             word = lexicon.randomWord(pos[i])
-        //             if (word === 'chevrolet') {
-        //                 word = p.random(nouns)
-        //             }
-        //         }
-        //         result += word
-        //         result += '  '
-        //     }
-        //     p.createP(result)
-        // }
+            let result = ' '
+            for (let i = 0; i < words.length; i++) {
+                let word = words[i]
+                if (/nn.*/.test(pos[i])) {
+                    word = rita.lexicon.randomWord(pos[i])
+                    if (word === 'chevrolet') {
+                        word = p.random(nouns)
+                    }
+                }
+                result += word
+                result += '  '
+            }
+            let parr = p.createP(result)
+            parr.id('parr')
 
-        // const getArticle = async () => {
-        //     poem = ''
-        //     articleRaw = `http://poetrydb.org//author/emerson`
-        //     const response = await fetch(articleRaw);
-        //     const article1 = await response.json();
-        //     let lines = random(article1).lines
-        //     lines.forEach(x => poem += x)
-        //     let rs = new RiString(poem)
-        //     let words = rs.words()
-        //     let pos = rs.pos()
+            wordsSeparated = rita.tokenize(result)
 
-        //     let result = ' '
-        //     for (let i = 0; i < words.length; i++) {
-        //         let word = words[i]
-        //         if (/nn.*/.test(pos[i])) {
-        //             word = lexicon.randomWord(pos[i])
-        //             if (word === 'chevrolet') {
-        //                 word = random(nouns)
-        //             }
-        //         }
-        //         result += word
-        //         result += '  '
-        //     }
-        //     let parr = createP(result)
-        //     parr.id('parr')
+        };
 
-        //     wordsSeparated = RiTa.tokenize(result)
-
-        // };
-
-        // p.speakWords = () => {
-
-        //     myVoice.setVoice('Zarvox');
-        //     setInterval(() => {
-        //         myVoice.speak(wordsSeparated[inx]);
-        //         inx = (inx + 1) % wordsSeparated.length; // increment
-        //     }, 1000);
-
-        // }
 
         p.recordSong = () => {
 
