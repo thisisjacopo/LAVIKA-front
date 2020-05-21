@@ -15,8 +15,11 @@ class Navbar extends Component {
         </Link>
         {
           isLoggedIn
-            ? <div>
+            ? <div className="navbar-btns">
               <p>{user.username}</p>
+              <Link to={'/xp'} id='xp-btn'>
+              <h4>XP</h4>
+               </Link>
               <button onClick={logout}> Logout </button>
             </div>
             : (

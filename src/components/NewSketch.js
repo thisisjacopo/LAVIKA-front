@@ -14,15 +14,6 @@ import sSound from '../samples/s.wav'
 import rita from 'rita';
 
 
-//import './../lib/P5-Speech'
-//import './../lib/Sound'
-//import './../lib/P5-Speech'
-//import './../lib/rita-full'
-
-//import P5ReactAdapter from '../constants/P5ReactAdapter'
-
-//const actioncable = require("actioncable")
-
 class NewSketch extends React.Component {
     constructor(props) {
         super(props);
@@ -41,21 +32,12 @@ class NewSketch extends React.Component {
 
         let cnv = null
         let nouns = ['actor', 'gold', 'Painting', 'advertisement', 'grass', 'Parrot', 'afternoon', 'greece', 'Pencil', 'airport', 'guitar', 'Piano', 'ambulance', 'Hair', 'Pillow', 'animal', 'Hamburger', 'Pizza', 'answer', 'Helicopter', 'Planet', 'apple', 'Helmet', 'Plastic', 'army', 'Holiday', 'Portugal', 'australia', 'Honey', 'Potato', 'Balloon', 'Horse', 'Queen', 'Banana', 'Hospital', 'Quill', 'Battery', 'House', 'Rain', 'Beach', 'Hydrogen', 'Rainbow', 'Beard', 'Ice', 'Raincoat', 'Bed', 'Insect', 'Refrigerator', 'Belgium', 'Insurance', 'Restaurant', 'Boy', 'Iron', 'River', 'Branch', 'Island', 'Rocket', 'Breakfast', 'Jackal', 'Room', 'Brother', 'Jelly', 'Rose', 'Camera', 'Jewellery', 'Russia', 'Candle', 'Jordan', 'Sandwich', 'Car', 'Juice', 'School', 'Caravan', 'Kangaroo', 'Scooter', 'Carpet', 'King', 'Shampoo', 'Cartoon', 'Kitchen', 'Shoe', 'China', 'Kite', 'Soccer', 'Church', 'Knife', 'Spoon', 'Crayon', 'Lamp', 'Stone', 'Crowd', 'Lawyer', 'Sugar', 'Daughter', 'Leather', 'Sweden', 'Death', 'Library', 'Teacher', 'Denmark', 'Lighter', 'Telephone', 'Diamond', 'Lion', 'Television', 'Dinner', 'Lizard', 'Tent', 'Disease', 'Lock', 'Thailand', 'Doctor', 'London', 'Tomato', 'Dog', 'Lunch', 'Toothbrush', 'Dream', 'Machine', 'Traffic', 'Dress', 'Magazine', 'Train', 'Easter', 'Magician', 'Truck', 'Egg', 'Manchester', 'Uganda', 'Eggplant', 'Market', 'Umbrella', 'Egypt', 'Match', 'Van', 'Elephant', 'Microphone', 'Vase', 'Energy', 'Monkey', 'Vegetable', 'Engine', 'Morning', 'Vulture', 'England', 'Motorcycle', 'Wall', 'Evening', 'Nail', 'Whale', 'Eye', 'Napkin', 'Window', 'Family', 'Needle', 'Wire', 'Finland', 'Nest', 'Xylophone', 'Fish', 'Nigeria', 'Yacht', 'Flag', 'Night', 'Yak', 'Flower', 'Notebook', 'Zebra', 'Football', 'Ocean', 'Zoo', 'Forest', 'Oil', 'garden', 'Fountain', 'Orange', 'gas', 'France', 'Oxygen', 'girl', 'Furniture', 'Oyster', 'glass', 'garage', 'ghost']
-        let hh, k, s, hPhrase, hPat, drums, arrOfSin, mic, input1, button1, lexicon, speakButton, recordButton;
+        let hh, k, s, hPhrase, hPat, drums, arrOfSin, mic, speakButton, recordButton;
         let recorder, soundFile, o1, o2, o3, o4, o5, o6, kPat, sPat, o1Pat, o2Pat, o3Pat, o4Pat, o5Pat, o6Pat;
         let kPhrase, sPhrase, o1Phrase, o2Phrase, o3Phrase, o4Phrase, o5Phrase, o6Phrase, bpmCtr, i, ki, sn;
 
         let state = 0;
         //deleted array of words to replace Chevrolet
-
-        let poem = ''
-
-        let wordsSeparated = []
-        let mainInfo = document.getElementById('mainInfo')
-        // let myVoice = new p5.Speech()
-        let x = 0.2
-        let noiseScale = 0.02;
-        let inx = 0;
 
         //perDist per instrument
         let perDist = [0, 0, 0, 0, 0, 1]
@@ -72,6 +54,7 @@ class NewSketch extends React.Component {
 
             // CANVAS 
             cnv = p.createCanvas(700, 700)
+            self.canvas = cnv
             cnv.mousePressed(p.addIns)
             cnv.parent('#ccc')
             // MIC SETUP
@@ -170,6 +153,7 @@ class NewSketch extends React.Component {
 
             // ADDINg PHRASES
             drums = new p5.Part()
+            self.drums = drums
             drums.addPhrase(hPhrase)
             drums.addPhrase(sPhrase)
             drums.addPhrase(kPhrase)
@@ -190,8 +174,6 @@ class NewSketch extends React.Component {
 
             bpmCtr.parent('#bcc')
             ////////////////////////
-
-
           
         }
 
@@ -299,8 +281,8 @@ class NewSketch extends React.Component {
             }
             let parr = p.createP(result)
             parr.id('parr')
-
-            wordsSeparated = rita.tokenize(result)
+            // let wordsSeparated = []
+            // wordsSeparated = rita.tokenize(result)
 
         };
 
@@ -325,15 +307,22 @@ class NewSketch extends React.Component {
         }
     }
 
+	componentWillUnmount() {
+        this.canvas.remove();
+        this.drums.pause();
+	}
+
     render() {
         return (
-
         <>
         { this.state.isLoading 
-         ? 'loading'
+         ? ''
          : <div id = "canvas" className= "canvas" ref = {this.myRef}/>
          }
-
+         <div className="drum-container">
+         <div className="canvasContainer" id="ccc"></div>
+         <div className="buttonContainer" id="bcc"></div>
+        </div>
         </>
         )
     }

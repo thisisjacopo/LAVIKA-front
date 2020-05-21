@@ -53,8 +53,8 @@ class AuthProvider extends React.Component {
       })
       .catch((err) => console.log(err));
   }
-  signup = (username, password) => {
-    axios.post('http://localhost:5000/auth/signup', { username, password }, { withCredentials: true })
+  signup = (username,email, password) => {
+    axios.post('http://localhost:5000/auth/signup', { username,email,password }, { withCredentials: true })
       .then((response) => {
         const user = response.data;
         this.setState({ isLoggedIn: true, isLoading: false, user });
