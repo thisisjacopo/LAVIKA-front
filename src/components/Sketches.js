@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 //import {ReactP5Wrapper as P5} from 'p5wrappers'
 import NewSketch from './NewSketch'
 

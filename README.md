@@ -117,7 +117,7 @@ Song model
 | POST        | `/auth/login`  | {username, password}        | 200            | 401          | Checks if fields not empty (else 400), if user exists (else 400), and if password matches (else 401), then stores user in session. |
 | GET         | `/auth/logout` |                             | 204            | 404          | Logs out the user. And destroys the session.                 |
 | GET         | `/users`       |                             | 200            | 404          | Check if user is logged in and returns current user data.    |
-| PUT         | `/users`       | {name,imgPath,songs}        | 200            | 400          | Edits profile                                                |
+| PUT         | `/users`       | {username, email, imgPath}        | 200            | 400          | Edits profile                                                |
 | POST        | `/scenes`      | {name} + formData           | 201            |              | Receives a file, uploads to cloudinary and creates a new song document. |
 | DELETE      | `/scenes/:id`  |                             | 200            | 400          | Deletes a song by its ID and updates current user's songs.   |
 | GET         | `/scenes`      |                             | 200            | 400          | Shows all the songs created by the community.                |
