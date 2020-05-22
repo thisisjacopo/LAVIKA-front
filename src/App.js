@@ -23,6 +23,8 @@ function App() {
         <PrivateRoute exact path="/xp" component={xp} />
         <PrivateRoute exact path="/comunity" component={Comunity} />
         <PrivateRoute exact path="/profile" component={Profile} />
+
+  
       </Switch>
     </div>
   );
