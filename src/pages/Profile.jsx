@@ -17,24 +17,28 @@ class Profile extends Component {
     const { user } = this.state;
     console.log(user);
     return (
-        <div>
-        {
-            !user
-            ? 'loading'
-            : 
-            <div>
+      <div>
+        {!user ? (
+          "loading"
+        ) : (
+          <div>
             <h1>{user.name}</h1>
-            {user.songs.map(song=>{
-                return (
-                    <h4>
-                        {song.name}
-                    </h4>
-                )
-            })}   
-            </div>
-        }
-    </div>
-    )
+            {user.songs.map((song) => {
+              return (
+                <div key={song._id}>
+                  <h4>{song.name}</h4>
+                  <audio controls>
+                    <source src={song.urlPath} type="audio/ogg" />
+                    <source src={song.urlPath} type="audio/mpeg" />
+                    Your browser does not support the audio tag.
+                  </audio>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
   }
 }
 

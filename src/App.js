@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import Navigation from "./components/Navigation";
 import xp from "./pages/Xp";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -16,7 +16,7 @@ import PrivateRoute from "./components/PrivateRoute";
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      <Navigation />
       <Switch>
         <Route exact path="/" component={Home} />
         <PublicRoute exact path="/signup" component={Signup} />
