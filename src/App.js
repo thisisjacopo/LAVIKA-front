@@ -6,11 +6,11 @@ import xp from "./pages/Xp";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Comunity from "./pages/Comunity";
+import Profile from "./pages/Profile";
 //import Private from "./pages/Private";
 import Home from "./pages/Home";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
-
 
 function App() {
   return (
@@ -23,10 +23,11 @@ function App() {
         <PrivateRoute exact path="/xp" component={xp} />
 
         <PrivateRoute exact path="/comunity" component={Comunity} />
-  
+        <PrivateRoute exact path="/profile" component={Profile} />
+
+
       </Switch>
     </div>
   );
 }
-
 export default App;
