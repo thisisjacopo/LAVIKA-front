@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { withAuth } from "./../lib/Auth";
-// import { SongsContext } from "../contexts/SongsContext";
-//IMPORT DATA FROM MONGO
-//MAP OVER ALL SONGS COLLECTION
-//DIPLAY ONE CARD FOR EACH SONG WITH TITLE AND DESCRIPTION
-class Comunity extends Component {
+
+
+  class Comunity extends Component {
   // static contextType = SongsContext;
   state = {
     songs: [],
@@ -26,12 +24,17 @@ class Comunity extends Component {
       <div>
         <h1>Comunity PAGE </h1>
         <h4>{user.username}</h4>
+             
         {this.state.songs.length > 0 ? (
           songs.map((song) => {
             return (
               <div key={song._id}>
                 <h4>{song.name}</h4>
-                <h4>{}</h4>
+                <audio controls>
+                   <source src={song.urlPath} type="audio/ogg"/>
+                  <source src={song.urlPath} type="audio/mpeg"/>
+                     Your browser does not support the audio tag.
+                </audio>
               </div>
             );
           })
