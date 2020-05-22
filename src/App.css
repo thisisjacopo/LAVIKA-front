@@ -19,8 +19,7 @@
 .navbar-btns{
   display: flex;
   flex-direction: row;
-  margin: 2rem;
-  padding: 2rem;
+ 
   margin-right: 2rem;
 }
 .navbar-btns *{
@@ -30,9 +29,9 @@
 .navbar h4{
   text-decoration: none;
   font-family: Mantra;
-  font-size: 2rem;
-  color: rgb(36, 36, 36);
-  margin: 2rem;
-  padding: 2rem;
+  font-size: 1.4em;
+  color: rgb(173, 172, 172);
+  margin: 1.4em;
+
   margin-right: 2rem;
 }
