@@ -19,8 +19,7 @@
 .navbar-btns{
   display: flex;
   flex-direction: row;
-  margin: 2rem;
-  padding: 2rem;
+
   margin-right: 2rem;
 }
 .navbar-btns *{
