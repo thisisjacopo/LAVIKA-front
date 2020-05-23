@@ -7,7 +7,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Comunity from "./pages/Comunity";
 import Profile from "./pages/Profile";
-//import Private from "./pages/Private";
+import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
@@ -23,8 +23,7 @@ function App() {
         <PrivateRoute exact path="/xp" component={xp} />
         <PrivateRoute exact path="/comunity" component={Comunity} />
         <PrivateRoute exact path="/profile" component={Profile} />
-
-  
+        <PrivateRoute exact path="/edit-profile" component={EditProfile} />
       </Switch>
     </div>
   );
