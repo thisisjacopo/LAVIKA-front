@@ -633,6 +633,8 @@ class NewSketch extends React.Component {
         justify-content: space-around;
         align-items: center;
         max-width: 25%;
+        max-height: 400px;
+        overflow-y: scroll;
       }
 
       @media ${Device.tablet} {
@@ -674,6 +676,7 @@ class NewSketch extends React.Component {
         justify-content: space-around;
         align-items: center;
         max-width: 25%;
+        min-width: 240px;
       }
 
       @media ${Device.tablet} {
@@ -693,11 +696,12 @@ class NewSketch extends React.Component {
         <MainDiv className="containerDiv">
           <LyricContainer className="lyricContainer" id="lyricContainer" />
           <SketchContainer className="sketchContainer" id="sketchContainer">
-          
+          <div>
           {
         this.state.save ? <AddThing /> : null
-      }
-        <Button variant='outline' mr={2} onClick={() => this.setState({save: !this.state.save})}>Save</Button>
+        }
+        </div>
+        <Button variant='outline' my={4} onClick={() => this.setState({save: !this.state.save})}>Save</Button>
     
           </SketchContainer>
           <ControlsContainer className="controlsContainer" id="controlsContainer" />

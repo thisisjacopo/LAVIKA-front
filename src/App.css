@@ -24,6 +24,7 @@
 }
 .navbar-btns *{
   margin-left: 14px;
+  text-decoration: none;
 }
 
 .navbar h4{

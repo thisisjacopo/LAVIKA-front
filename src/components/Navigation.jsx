@@ -13,9 +13,9 @@ class Navigation extends Component {
     return (
       <ThemeProvider theme={theme}>
       <Flex className="navbar">
-        <Link to={'/'} id='home-btn'>
-          <h4>Home</h4>
-        </Link>
+       
+          <h4>LAVIKA</h4>
+       
         {
           isLoggedIn
             ? <div className="navbar-btns">

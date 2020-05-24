@@ -11,6 +11,7 @@ import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
+import Private from "./pages/Private";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <PrivateRoute exact path="/comunity" component={Comunity} />
         <PrivateRoute exact path="/profile" component={Profile} />
         <PrivateRoute exact path="/edit-profile" component={EditProfile} />
+        <PrivateRoute exact path="/private" component={Private} />
       </Switch>
     </div>
   );

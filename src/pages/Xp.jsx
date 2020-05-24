@@ -3,8 +3,6 @@ import NewSketch from '../components/NewSketch'
 import { withAuth } from './../lib/Auth';
 import { ThemeProvider } from 'emotion-theming'
 import theme from '@rebass/preset'
-import { Button } from 'rebass'
-import { Device } from '../components/Device';
 
 
 class Xp extends Component {
