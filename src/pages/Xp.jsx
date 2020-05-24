@@ -1,15 +1,9 @@
 import React, { Component } from 'react'
 import NewSketch from '../components/NewSketch'
-import AddThing from '../components/AddThing'
 import { withAuth } from './../lib/Auth';
 import styled from 'styled-components'
 
-
 class Xp extends Component {
-  state = {
-    showSketch: true,
-  }
-
   render(){
     const Button = styled.button`
     background: ${props => props.theme.yellow[1]};

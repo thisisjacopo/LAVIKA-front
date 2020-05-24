@@ -6,13 +6,11 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Comunity from "./pages/Comunity";
 import Profile from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
 import Home from "./pages/Home";
 import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
-import './App.css'
-
-
-
+import Private from "./pages/Private";
 
 
 function App() {
@@ -33,5 +31,4 @@ function App() {
     
   );
 }
-
 export default App;
