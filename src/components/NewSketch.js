@@ -15,7 +15,6 @@ import rita from "rita";
 import AddThing from "../components/AddThing";
 import styled from "styled-components";
 import { Device } from "../components/Device";
-import { Button } from 'rebass'
 
 class NewSketch extends React.Component {
   constructor(props) {
@@ -23,7 +22,8 @@ class NewSketch extends React.Component {
     this.myRef = React.createRef();
     this.state = {
       isLoading: true,
-      save:false
+      save: false,
+      showControls: false,
     };
   }
 
@@ -295,6 +295,7 @@ class NewSketch extends React.Component {
       let getArticleBtn = p.createButton("Get Random Lyric");
       getArticleBtn.mousePressed(getArticle);
       getArticleBtn.parent("#lyricContainer");
+      self.getArticleBtn = getArticleBtn;
       //record Setup
 
       recordButton = p.createButton("record");
@@ -546,7 +547,7 @@ class NewSketch extends React.Component {
 
     const getArticle = async () => {
       let poem = "";
-      let articleRaw = `http://poetrydb.org//author/emerson`;
+      let articleRaw = `http://poetrydb.org//author/Shakespeare;Sonnet`;
       const response = await fetch(articleRaw);
       const article1 = await response.json();
       let lines = p.random(article1).lines;
@@ -554,6 +555,7 @@ class NewSketch extends React.Component {
       let rs = new rita.RiString(poem);
       let words = rs.words();
       let pos = rs.pos();
+      this.getArticleBtn.remove();
 
       let result = " ";
       for (let i = 0; i < words.length; i++) {
@@ -570,8 +572,8 @@ class NewSketch extends React.Component {
 
       //self makes variable available in the global scope of the addClass
       //parr is div where random lyric is created
-
-      let parr = p.createP(result);
+      let newResult = result.slice(0, 950);
+      let parr = p.createP(newResult);
       self.parr = parr;
       parr.id("parr");
       parr.parent("#lyricContainer");
@@ -612,17 +614,26 @@ class NewSketch extends React.Component {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-        align-items: center;
+        ${"" /* align-items: center; */}
+        padding: 0 2.5%;
+        min-height: 80vh;
       }
 
       @media ${Device.tablet} {
-        width: 100%;
-        background-color: blue;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 0.5%;
       }
 
       @media ${Device.mobile} {
-        width: 100%;
-        background-color: yellow;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0;
+        align-items: center;
       }
     `;
 
@@ -632,7 +643,8 @@ class NewSketch extends React.Component {
         flex-flow: column;
         justify-content: space-around;
         align-items: center;
-        max-width: 25%;
+        max-width: 30%;
+        min-width: 30%;
         max-height: 400px;
         overflow-y: scroll;
       }
@@ -646,15 +658,17 @@ class NewSketch extends React.Component {
         width: 100%;
         background-color: yellow;
       }
-    `
+    `;
 
     const SketchContainer = styled.div`
       @media ${Device.laptop} {
         display: flex;
         flex-flow: column-reverse;
-        justify-content: space-around;
+        justify-content: flex-end;
         align-items: center;
-        max-width: 25%;
+        max-width: 30%;
+        min-width: 30%;
+        padding-top: 10px;
       }
 
       @media ${Device.tablet} {
@@ -666,8 +680,7 @@ class NewSketch extends React.Component {
         width: 100%;
         background-color: yellow;
       }
-    `
-
+    `;
 
     const ControlsContainer = styled.div`
       @media ${Device.laptop} {
@@ -675,36 +688,45 @@ class NewSketch extends React.Component {
         flex-flow: column;
         justify-content: space-around;
         align-items: center;
-        max-width: 25%;
-        min-width: 240px;
+        max-width: 30%;
+        min-width: 30%;
       }
 
       @media ${Device.tablet} {
         width: 100%;
-        background-color: blue;
+        display: flex;
+        flex-flow: column;
+        justify-content: space-around;
+        align-items: center;
+        max-width: 97.5%;
+        min-width: 97.5%;
       }
 
       @media ${Device.mobile} {
-        width: 100%;
-        background-color: yellow;
+        max-width: 100%%;
+        min-width: 100%%;
       }
-    `
+    `;
 
     return (
       <>
-     
         <MainDiv className="containerDiv">
           <LyricContainer className="lyricContainer" id="lyricContainer" />
           <SketchContainer className="sketchContainer" id="sketchContainer">
-          <div>
-          {
-        this.state.save ? <AddThing /> : null
-        }
-        </div>
-        <Button variant='outline' my={4} onClick={() => this.setState({save: !this.state.save})}>Save</Button>
-    
+            <AddThing />
           </SketchContainer>
-          <ControlsContainer className="controlsContainer" id="controlsContainer" />
+          <button
+            onClick={() =>
+              this.setState({ showControls: !this.state.showControls })
+            }
+          >
+            Show Controls
+          </button>
+          <ControlsContainer
+            style={{ display: this.state.showControls ? "block" : "none" }}
+            className="controlsContainer"
+            id="controlsContainer"
+          />
         </MainDiv>
       </>
     );
