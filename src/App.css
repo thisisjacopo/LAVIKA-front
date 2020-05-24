@@ -8,30 +8,8 @@
   font-family: Mantra;
   src: url('./fonts/Mantra-Regular.ttf');
 }
-.navbar{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-items: center;
-  justify-content: space-around;
-  min-height: 5rem;
-}
-.navbar-btns{
-  display: flex;
-  flex-direction: row;
- 
-  margin-right: 2rem;
-}
-.navbar-btns *{
-  margin-left: 14px;
+@font-face{
+  font-family: Comfortaa;
+  src: url('./fonts/Comfortaa-Medium.ttf');
 }
 
-.navbar h4{
-  text-decoration: none;
-  font-family: Mantra;
-  font-size: 1.4em;
-  color: rgb(173, 172, 172);
-  margin: 1.4em;
-
-  margin-right: 2rem;
-}

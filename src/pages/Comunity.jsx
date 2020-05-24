@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { withAuth } from "./../lib/Auth";
+import styled, {ThemeProvider} from "styled-components";
 
-
-  class Comunity extends Component {
+class Comunity extends Component {
   // static contextType = SongsContext;
   state = {
     songs: [],
@@ -19,21 +19,41 @@ import { withAuth } from "./../lib/Auth";
     const { user } = this.props;
     const songs = this.state.songs;
     console.log(songs);
+    const Name = styled.h4`
+      font-family: Mantra;
+      font-size: 3rem;
+      color: #30373d;
+    `;
+    const Title = styled.h1`
+      font-family: Comfortaa;
+      font-size: 5rem;
+      color: purple;
+    `;
+    const ComunityDiv = styled.h1`
+      display: flex;
+      flex-direction: column;
+      width: 90%;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem;
+    `;
+    
 
     return (
-      <div>
-        <h1>Comunity PAGE </h1>
-        <h4>{user.username}</h4>
-             
+      <ComunityDiv>
+        <Title>Comunity PAGE </Title>
+        <Name>{user.username}</Name>
+
         {this.state.songs.length > 0 ? (
           songs.map((song) => {
             return (
               <div key={song._id}>
-                <h4>{song.name}</h4>
+                <Name>{song.name}</Name>
                 <audio controls>
-                   <source src={song.urlPath} type="audio/ogg"/>
-                  <source src={song.urlPath} type="audio/mpeg"/>
-                     Your browser does not support the audio tag.
+                  <source src={song.urlPath} type="audio/ogg" />
+                  <source src={song.urlPath} type="audio/mpeg" />
+                  Your browser does not support the audio tag.
                 </audio>
               </div>
             );
@@ -52,7 +72,7 @@ import { withAuth } from "./../lib/Auth";
   gfhgfjuhkjhhgn gkhm,lkhkuhjmh hjkh,hhkgkgh jljkliilkjljljñokñkññjklhkjhghg
 </Text>
 </Card> */}
-      </div>
+      </ComunityDiv>
     );
   }
 }

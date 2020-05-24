@@ -1,18 +1,37 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "../lib/Auth";
-import { ThemeProvider } from "emotion-theming";
-import theme from "@rebass/preset";
-import { Flex } from "rebass";
-class Navigation extends Component {
+import styled from 'styled-components'
+import { Device } from '../components/Device';
+
+
+class Navbar extends Component {
   render() {
     // `user`, `logout`, `isLoggedIn` are coming from the AuthProvider
     // and are injected by the withAuth HOC
     const { user, logout, isLoggedIn } = this.props;
+    const Navbar = styled.nav`
+        @media ${Device.laptop} { 
+    color: yellow;
+    display: flex;
+    flex-direction: row;
+    max-height: 8rem;
+    background-color: ${props => props.theme.black[0]};
+    width: 100%;
+  }
+
+    @media ${Device.tablet} { 
+    color: green;
+    background-color: ${props => props.theme.black[1]};
+  }
+
+  @media ${Device.mobile} { 
+    color: red;
+  }
+`
 
     return (
-      <ThemeProvider theme={theme}>
-        <Flex
+        <Navbar
           px={1}
           color="white"
           bg="black"
@@ -48,10 +67,9 @@ class Navigation extends Component {
               </Link>
             </>
           )}
-        </Flex>
-      </ThemeProvider>
+        </Navbar>
     );
   }
 }
 
-export default withAuth(Navigation);
+export default withAuth(Navbar);
