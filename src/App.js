@@ -12,9 +12,10 @@ import PublicRoute from "./components/PublicRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import Private from "./pages/Private";
 import './App.css'
-
+import styled from 'styled-components'
 
 function App() {
+
   return (
     <div className="App">
 
@@ -28,6 +29,7 @@ function App() {
         <PrivateRoute exact path="/profile" component={Profile} />
         <PrivateRoute exact path="/edit-profile" component={EditProfile} />
         <PrivateRoute exact path="/private" component={Private} />
+        <PrivateRoute exact path="/xp/:id" component={xp} />        
       </Switch>
 
     </div>

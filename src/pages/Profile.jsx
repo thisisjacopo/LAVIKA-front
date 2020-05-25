@@ -56,7 +56,20 @@ class Profile extends Component {
                 </div>
               );
             })}
+            <div>
+              {
+                user.scenes.map(scene=>{
+                  return(
+                    <div>
+                    <Link to={`/xp/${scene._id}`}>
+                      <h4>{scene._id}</h4></Link>
+                    </div>
+                  )
+                })
+              }
+            </div>
           </div>
+          
         )}
       </div>
     );

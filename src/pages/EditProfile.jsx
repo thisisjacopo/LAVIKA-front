@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import { withAuth } from './../lib/Auth';
-import { Route, Redirect } from 'react-router-dom';
 
 // import axios from "axios";
 class EditProfile extends Component {
@@ -16,7 +15,7 @@ class EditProfile extends Component {
     }
     componentDidMount() {
         axios
-          .get(process.env.REACT_APP_API_URL + "/users", { withCredentials: true })
+          .get("http://localhost:5000/users", { withCredentials: true })
           .then((response) => console.log(response));
       }
     
@@ -25,7 +24,7 @@ class EditProfile extends Component {
       console.log("The file to be uploaded is :", e.target.files[0]);
       const uploadData = new FormData();
       uploadData.append("imgPath", e.target.files[0]);
-      axios.post(process.env.REACT_APP_API_URL + "/users/file", uploadData, { withCredentials: true })
+      axios.post("http://localhost:5000/users/file", uploadData, { withCredentials: true })
       .then(response => {
           // console.log('response is: ', response);
           // after the console.log we can see that response carries 'secure_url' which we can use to update the state 
@@ -40,11 +39,14 @@ class EditProfile extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        axios.post(process.env.REACT_APP_API_URL + '/users', this.state, { withCredentials: true })
+        axios.post('http://localhost:5000/users', this.state, { withCredentials: true })
         .then(res => {
             console.log('added: ', res);
-           
-            this.props.history.push('/profile')
+
+            this.props.me(()=>{
+              this.props.history.push('/profile')
+
+            })
            
         })
         .catch(err => {
