@@ -1,7 +1,34 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import { withAuth } from './../lib/Auth';
-import { Route, Redirect } from 'react-router-dom';
+import styled from "styled-components";
+import { Device } from "../components/Device";
+
+const EditProfilePage = styled.div`
+@media ${Device.laptop} {
+  width: 95%;
+  margin-left: 2.5%;
+  display: flex;
+  flex-direction: column;
+  justify-items:center;
+  align-items: center;
+  
+  .form-control{
+    margin: 2;
+    height:2rem;
+    background: none;
+    border:none;
+    border-bottom: 1px solid black;
+    text-align: center;
+  }
+}
+
+@media ${Device.laptop} {
+}
+
+@media ${Device.laptop} {
+}
+`
 
 // import axios from "axios";
 class EditProfile extends Component {
@@ -64,8 +91,9 @@ class EditProfile extends Component {
 
     render() {
         return (
+          <EditProfilePage>
       <div className="">
-        <h2 className ="">Edit User</h2>
+        <h1 className ="">Edit User</h1>
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <div className="form-group">
             <div className="">
@@ -130,6 +158,7 @@ class EditProfile extends Component {
           </div>
         </form>
             </div>
+            </EditProfilePage>
         )
     }
 }
