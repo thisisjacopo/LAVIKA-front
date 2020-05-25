@@ -256,8 +256,8 @@ class NewSketch extends React.Component {
     //deleted array of words to replace Chevrolet
 
     //perDist per instrument
-    let perDist = [0, 0, 0, 0, 0, 1];
-    let perDistKick = [0, 0, 0, 1, 1, 1];
+    let perDist = [0, 0, 1, 0, 0, 1];
+    let perDistKick = [0, 1, 0, 1, 0, 1];
     let perDistSnare = [0, 0, 0, 0, 0, 0, 0, 1];
 
     p.touchStarted = () => {
@@ -338,15 +338,15 @@ class NewSketch extends React.Component {
 
       // PATTERNS
 
-      hPat = [1, 0, 1, 0];
+      hPat = [0, 1, 0, 1];
       kPat = [1, 0, 1, 0];
-      sPat = [0, 0, 0, 1];
+      sPat = [1, 0, 0, 0];
       o1Pat = [0, 0, 0, 0];
       o2Pat = [0, 0, 0, 0];
       o3Pat = [0, 0, 0, 0];
-      o4Pat = [0, 0, 0, 0];
+      o4Pat = [0, 0, 0, 0, 0, 0, 1, 0];
       o5Pat = [0, 0, 0, 0];
-      o6Pat = [0, 0, 0, 0];
+      o6Pat = [0, 0, 0, 0, 0, 0, 0, 1];
 
       arrOfSin = [o1Pat, o2Pat, o3Pat, o4Pat, o5Pat, o6Pat];
 
@@ -492,22 +492,22 @@ class NewSketch extends React.Component {
           isLoading: false,
         });
       } else {
-        p.frameRate(17);
+        p.frameRate(11);
         // get the overall volume (between 0 and 1.0)
         let vol = mic.getLevel() * 25;
-        p.fill(0);
+        p.fill(140, 190, 0);
         p.noStroke();
         p.smooth();
         // Draw an ellipse with height based on volume
-        let h = p.map(vol, 0, 1, p.random(1233), 0);
+        let h = p.map(vol, 0, 1, p.random(2), 0);
         p.ellipse((p.width / 1.2) * vol, h - 25, vol * 400, vol * 400);
-        drawPointy(100);
         drawPointy(10);
-        drawArc();
-        p.background(vol * 30, 7);
+        drawPointy(10);
+        drawArc(5);
+        p.background(vol * 10, 7);
 
         function drawPointy(weigh) {
-          p.stroke(vol * 200);
+          p.stroke(vol * 100);
           p.smooth();
           p.strokeWeight(p.random(weigh));
           p.point(p.random(p.height * 1.6), p.random(p.width * 1.6));
@@ -515,8 +515,8 @@ class NewSketch extends React.Component {
 
         function drawArc() {
           p.arc(
-            p.random(2000),
-            p.random(2000),
+            p.random(1000),
+            p.random(1000),
             vol * 200,
             vol * 444,
             vol * 444,

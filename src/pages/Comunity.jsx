@@ -9,18 +9,22 @@ class Comunity extends Component {
   // static contextType = SongsContext;
   state = {
     songs: [],
+    
   };
 
   componentDidMount() {
     axios
       .get("http://localhost:5000/scenes", { withCredentials: true })
       .then((response) => this.setState({ songs: response.data }));
+      
   }
 
   render() {
     const { user } = this.props;
     const songs = this.state.songs;
-
+    // const artist = {
+    //   artist: songs.user.username
+    // }
     const CommunityPage = styled.div`
     width:95%;
     margin-left: 2.5%;
@@ -33,17 +37,30 @@ class Comunity extends Component {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr ;
     grid-gap: 5px;
-    grid-auto-rows: min-max(15rem, auto); 
+    grid-auto-rows: min-max(15rem); 
     justify-items:center;
     align-items: center;
     `;
     const Card = styled.div`
       @media ${Device.laptop} {
-        background-color: white;
-        border: 2px solid black;
+        cursor: pointer;
+        background-color: none;
+        border: 1px solid black;
         display: flex;
         flex-direction: column;
-        max-width: 17rem
+        max-width: 20rem;
+        height: 20rem;
+        align-items: center;
+        justify-items: center;
+        margin: 1rem;
+        padding: 1rem;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+
+    :hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  background-color:white;
+}
       }
 
       @media ${Device.laptop} {
@@ -52,6 +69,11 @@ class Comunity extends Component {
       @media ${Device.laptop} {
       }
     `;
+
+    const Audio = styled.audio`
+ width: 15rem;
+
+  `;
 
     const Name = styled.h4`
       font-family: Comfortaa;
@@ -71,13 +93,15 @@ class Comunity extends Component {
         {this.state.songs.length > 0 ? (
           songs.map((song) => {
             return (
-              <Card key={song._id}>
-                <h4>{song.name}</h4>
-                <audio controls>
+              <Card id='card' key={song._id}>
+                 <h4>Artist: {song.artist}</h4>
+                <h4>Title:{song.name}</h4>
+                <Audio controls>
                   <source src={song.urlPath} type="audio/ogg" />
                   <source src={song.urlPath} type="audio/mpeg" />
                   Your browser does not support the audio tag.
-                </audio>
+                </Audio>
+                <p>Description: {song.description}</p>
               </Card>
             );
           })
