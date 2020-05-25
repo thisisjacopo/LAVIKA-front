@@ -51,7 +51,7 @@ class AddThing extends Component {
     // urlPath => this name has to be the same as in the model since we pass
     // req.body to .create() method when creating a new thing in '/api/things/create' POST route
     uploadData.append("urlPath", e.target.files[0]);
-    axios.post("http://localhost:5000/scenes/file", uploadData, { withCredentials: true })
+    axios.post(process.env.REACT_APP_API_URL + "/scenes/file", uploadData, { withCredentials: true })
       .then(response => {
         // console.log('response is: ', response);
         // after the console.log we can see that response carries 'secure_url' which we can use to update the state 
@@ -66,7 +66,7 @@ class AddThing extends Component {
   // this method submits the form
   handleSubmit = e => {
     e.preventDefault();
-    axios.post('http://localhost:5000/scenes', this.state, { withCredentials: true })
+    axios.post(process.env.REACT_APP_API_URL + '/scenes', this.state, { withCredentials: true })
       .then(res => {
         console.log('added: ', res);
         // here you would redirect to some other page 

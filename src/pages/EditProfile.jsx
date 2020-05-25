@@ -16,7 +16,7 @@ class EditProfile extends Component {
     }
     componentDidMount() {
         axios
-          .get("http://localhost:5000/users", { withCredentials: true })
+          .get(process.env.REACT_APP_API_URL + "/users", { withCredentials: true })
           .then((response) => console.log(response));
       }
     
@@ -25,7 +25,7 @@ class EditProfile extends Component {
       console.log("The file to be uploaded is :", e.target.files[0]);
       const uploadData = new FormData();
       uploadData.append("imgPath", e.target.files[0]);
-      axios.post("http://localhost:5000/users/file", uploadData, { withCredentials: true })
+      axios.post(process.env.REACT_APP_API_URL + "/users/file", uploadData, { withCredentials: true })
       .then(response => {
           // console.log('response is: ', response);
           // after the console.log we can see that response carries 'secure_url' which we can use to update the state 
@@ -40,7 +40,7 @@ class EditProfile extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5000/users', this.state, { withCredentials: true })
+        axios.post(process.env.REACT_APP_API_URL + '/users', this.state, { withCredentials: true })
         .then(res => {
             console.log('added: ', res);
            

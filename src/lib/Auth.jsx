@@ -37,7 +37,7 @@ class AuthProvider extends React.Component {
   componentDidMount() {
     // When app and AuthProvider load for the first time
     // make a call to the server '/me' and check if user is authenitcated
-    axios.get('http://localhost:5000/auth/me', { withCredentials: true })
+    axios.get(process.env.REACT_APP_API_URL + '/auth/me', { withCredentials: true })
       .then((response) => {
         const user = response.data;
         this.setState({ isLoggedIn: true, isLoading: false, user });
@@ -46,7 +46,7 @@ class AuthProvider extends React.Component {
   }
 
   login = (username, password) => {
-    axios.post('http://localhost:5000/auth/login', { username, password }, { withCredentials: true })
+    axios.post(process.env.REACT_APP_API_URL + '/auth/login', { username, password }, { withCredentials: true })
       .then((response) => {
         const user = response.data;
         this.setState({ isLoggedIn: true, isLoading: false, user });
@@ -54,7 +54,7 @@ class AuthProvider extends React.Component {
       .catch((err) => console.log(err));
   }
   signup = (username,email, password) => {
-    axios.post('http://localhost:5000/auth/signup', { username,email,password }, { withCredentials: true })
+    axios.post(process.env.REACT_APP_API_URL + '/auth/signup', { username,email,password }, { withCredentials: true })
       .then((response) => {
         const user = response.data;
         this.setState({ isLoggedIn: true, isLoading: false, user });
@@ -62,7 +62,7 @@ class AuthProvider extends React.Component {
       .catch((err) => console.log(err));
   }
   logout = () => {
-    axios.get('http://localhost:5000/auth/logout', { withCredentials: true })
+    axios.get(process.env.REACT_APP_API_URL + '/auth/logout', { withCredentials: true })
       .then((response) => {
         this.setState({ isLoggedIn: false, isLoading: false, user: null });
       })

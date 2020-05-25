@@ -10,14 +10,14 @@ class Profile extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/users", { withCredentials: true })
+      .get(process.env.REACT_APP_API_URL + "/users", { withCredentials: true })
       .then((response) => this.setState({ user: response.data }));
   }
 
   handleDelete(id){
     console.log(id)
     axios
-    .delete(`http://localhost:5000/scenes/${id}`, { withCredentials: true })
+    .delete(`${process.env.REACT_APP_API_URL}/scenes/${id}`, { withCredentials: true })
     .then((response) => console.log(response));
     this.componentDidMount()
 

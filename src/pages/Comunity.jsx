@@ -11,7 +11,7 @@ class Comunity extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/scenes", { withCredentials: true })
+      .get(process.env.REACT_APP_API_URL + "/scenes", { withCredentials: true })
       .then((response) => this.setState({ songs: response.data }));
   }
 

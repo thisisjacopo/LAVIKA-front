@@ -608,6 +608,7 @@ class NewSketch extends React.Component {
     }
   }
 
+
   render() {
     const MainDiv = styled.div`
       @media ${Device.laptop} {
