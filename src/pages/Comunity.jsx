@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { withAuth } from "./../lib/Auth";
-import styled, {ThemeProvider} from "styled-components";
+import styled from "styled-components";
+import { Device } from "../components/Device";
+
 
 class Comunity extends Component {
   // static contextType = SongsContext;
@@ -18,50 +20,70 @@ class Comunity extends Component {
   render() {
     const { user } = this.props;
     const songs = this.state.songs;
-    console.log(songs);
+
+    const CommunityPage = styled.div`
+    width:95%;
+    margin-left: 2.5%;
+    align-items:center;
+    justify-items: center;
+    text-align: center;
+`
+
+    const GridContainer = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr ;
+    grid-gap: 5px;
+    grid-auto-rows: min-max(15rem, auto); 
+    justify-items:center;
+    align-items: center;
+    `;
+    const Card = styled.div`
+      @media ${Device.laptop} {
+        background-color: white;
+        border: 2px solid black;
+        display: flex;
+        flex-direction: column;
+        max-width: 17rem
+      }
+
+      @media ${Device.laptop} {
+      }
+
+      @media ${Device.laptop} {
+      }
+    `;
+
     const Name = styled.h4`
-      font-family: Mantra;
-      font-size: 3rem;
+      font-family: Comfortaa;
+      font-size: 2rem;
       color: #30373d;
     `;
     const Title = styled.h1`
       font-family: Comfortaa;
-      font-size: 5rem;
+      font-size: 3rem;
       color: purple;
     `;
-    const ComunityDiv = styled.h1`
-      display: flex;
-      flex-direction: column;
-      width: 90%;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 4rem;
-    `;
-    
-
     return (
-      <ComunityDiv>
-        <Title>Comunity PAGE </Title>
-        <Name>{user.username}</Name>
-
+      <CommunityPage>
+      <Title>Comunity PAGE </Title>
+      <Name>{user.username}</Name>
+      <GridContainer>
         {this.state.songs.length > 0 ? (
           songs.map((song) => {
             return (
-              <div key={song._id}>
-                <Name>{song.name}</Name>
+              <Card key={song._id}>
+                <h4>{song.name}</h4>
                 <audio controls>
                   <source src={song.urlPath} type="audio/ogg" />
                   <source src={song.urlPath} type="audio/mpeg" />
                   Your browser does not support the audio tag.
                 </audio>
-              </div>
+              </Card>
             );
           })
         ) : (
           <h1>Coming</h1>
         )}
-
         {/* <Card width={356}>
   <Image src={props.image} />
   <Heading>SCENE</Heading>
@@ -72,7 +94,8 @@ class Comunity extends Component {
   gfhgfjuhkjhhgn gkhm,lkhkuhjmh hjkh,hhkgkgh jljkliilkjljljñokñkññjklhkjhghg
 </Text>
 </Card> */}
-      </ComunityDiv>
+      </GridContainer>
+      </CommunityPage>
     );
   }
 }

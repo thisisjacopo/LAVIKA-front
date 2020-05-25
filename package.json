@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.10.0",
     "@rebass/forms": "^4.0.6",
     "@rebass/preset": "^4.0.5",
     "@testing-library/jest-dom": "^4.2.4",

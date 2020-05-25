@@ -547,7 +547,7 @@ class NewSketch extends React.Component {
 
     const getArticle = async () => {
       let poem = "";
-      let articleRaw = `http://poetrydb.org//author/Shakespeare;Sonnet`;
+      let articleRaw = `http://poetrydb.org//author/emerson`;
       const response = await fetch(articleRaw);
       const article1 = await response.json();
       let lines = p.random(article1).lines;
