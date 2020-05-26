@@ -1,11 +1,12 @@
   
 import React, { Component } from "react";
 import axios from "axios";
-import { withAuth } from "./../lib/Auth";
+import { withAuth } from "../lib/Auth";
 import styled from "styled-components";
 import { Device } from "../components/Device";
+import Navigation from "../components/Navigation";
 
-class Comunity extends Component {
+class Community extends Component {
   // static contextType = SongsContext;
   state = {
     songs: [],
@@ -163,6 +164,7 @@ class Comunity extends Component {
     `;
     return (
       <CommunityPage>
+      <Navigation />
         <Title>Community Page </Title>
         <GridContainer>
           {this.state.songs.length > 0 ? (
@@ -198,4 +200,4 @@ class Comunity extends Component {
   }
 }
 
-export default withAuth(Comunity);
+export default withAuth(Community);

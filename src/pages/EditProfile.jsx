@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import { withAuth } from './../lib/Auth';
+import Navigation from "../components/Navigation";
 
 // import axios from "axios";
 class EditProfile extends Component {
@@ -67,6 +68,7 @@ class EditProfile extends Component {
     render() {
         return (
       <div className="">
+      <Navigation/>
         <h2 className ="">Edit User</h2>
         <form className="" onSubmit={(e) => this.handleSubmit(e)}>
           <div className="form-group">

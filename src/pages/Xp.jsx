@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import NewSketch from '../components/NewSketch'
 import NewSketch2 from '../components/NewSketch2'
 import NewSketch3 from '../components/NewSketch3'
+import Navigation from "../components/Navigation";
 import { withAuth } from './../lib/Auth';
 import axios from 'axios'
 
@@ -32,7 +33,7 @@ class Xp extends Component {
   }
 
   switchCanvas = ()=>{
-    this.setState({canvas: (this.state.canvas + 1) % 2})
+    this.setState({canvas: (this.state.canvas + 1) % 3})
 
   }
   render(){
@@ -54,6 +55,7 @@ class Xp extends Component {
 
   return (
     <div>
+    <Navigation />
       <button onClick={this.switchCanvas}>Switch experience</button>
     {
       this.state.scene === null 

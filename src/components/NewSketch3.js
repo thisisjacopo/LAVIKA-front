@@ -279,7 +279,7 @@ class NewSketch3 extends React.Component {
       p.getAudioContext().suspend();
 
       // CANVAS
-      cnv = p.createCanvas(400, 400);
+      cnv = p.createCanvas(600, 600);
       self.canvas = cnv;
       cnv.mousePressed(p.addIns);
       cnv.parent("#sketchContainer");

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import p5 from "p5";
 import "p5/lib/addons/p5.sound";
 import "p5/lib/addons/p5.dom";
@@ -12,15 +12,19 @@ import o5Sound from "../samples/o5.wav";
 import o6Sound from "../samples/o6.wav";
 import sSound from "../samples/s.wav";
 import rita from "rita";
+import AddThing from "../components/AddThing";
 import styled from "styled-components";
 import { Device } from "../components/Device";
 import axios from 'axios'
+
+
 
 let scene = {
   name: '',
   strokeR: '',
   strokeG: '' ,
   strokeB: '',
+  capture:'',
   
   patterns: {
     hPat: [1, 0, 1, 0],
@@ -35,7 +39,6 @@ let scene = {
     o6Pat: [0, 0, 0, 0]
   }
  }
-
 class NewSketch extends React.Component {
   constructor(props) {
     super(props);
@@ -48,6 +51,16 @@ class NewSketch extends React.Component {
   }
 
   componentDidMount() {
+    this.myP5 = new p5(this.sketch, this.myRef.current);
+  }
+  componentDidUpdate() {
+    this.canvas.remove();
+    this.drums.pause();
+    this.mic.stop();
+    this.playButton.remove();
+    if (this.parr !== undefined) {
+      this.parr.remove();
+    }
     this.myP5 = new p5(this.sketch, this.myRef.current);
   }
 
@@ -243,6 +256,7 @@ class NewSketch extends React.Component {
       "garage",
       "ghost",
     ];
+    let saveFramex
     self.nouns = nouns
     let hh, k, s, hPhrase, hPat, drums, arrOfSin, mic, recordButton;
     let recorder,
@@ -285,9 +299,17 @@ class NewSketch extends React.Component {
     let perDistKick = [0, 0, 0, 1, 1, 1];
     let perDistSnare = [0, 0, 0, 0, 0, 0, 0, 1];
 
-    p.touchStarted = () => {
-      p.userStartAudio();
-    };
+    // p.touchStarted = () => {
+    //   p.userStartAudio();
+    // };
+
+    p.startAudio = () => {
+      p.userStartAudio(); 
+    }
+
+    let playButton = p.createButton('play')
+    playButton.mousePressed(p.startAudio)
+    self.playButton = playButton
 
     p.setup = () => {
       p.getAudioContext().suspend();
@@ -301,7 +323,7 @@ class NewSketch extends React.Component {
       mic = new p5.AudioIn();
       mic.start();
       self.mic = mic;
-
+      
       // layout
 
       // let lyricContainer = p.createDiv('div')
@@ -688,6 +710,8 @@ class NewSketch extends React.Component {
       // let wordsSeparated = []
       // wordsSeparated = rita.tokenize(result)
     };
+    
+    
 
     p.recordSong = () => {
       if (state === 0 && mic.enabled) {
@@ -705,18 +729,30 @@ class NewSketch extends React.Component {
         state++;
       }
     };
+
+    p.saveTheFrame =()=>{
+    p.saveFrames('out', 'png', 1, 1, data => {
+      scene.capture = data[0].imageData 
+    });
+  }
+    self.saveTheFrame = p.saveTheFrame
   };
 
   componentWillUnmount() {
     this.canvas.remove();
     this.drums.pause();
     this.mic.stop();
+    this.playButton.remove();
     if (this.parr !== undefined) {
       this.parr.remove();
     }
   }
 
   saveScene = () => {
+
+    // console.log(this.canvas.toDataURL())
+
+    this.saveTheFrame()
     const ranInd = Math.floor(Math.random() * this.nouns.length)
     let ranName = this.nouns[ranInd] +' '+ this.nouns[ranInd-1] 
     scene.name = ranName
@@ -837,9 +873,11 @@ class NewSketch extends React.Component {
          <MainDiv className="containerDiv">
           <LyricContainer className="lyricContainer" id="lyricContainer" />
           <SketchContainer className="sketchContainer" id="sketchContainer">
+            {/* <AddThing /> */}
          
             <button onClick={this.saveScene}>save scene</button>
             </SketchContainer>
+            {/* <button onClick={this.toggleControls}> Show Controls </button> */}
 
            
                <ControlsContainer

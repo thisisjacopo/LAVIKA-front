@@ -122,3 +122,7 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
   background: rgba(158, 185, 187, 0.95);
 }
+.profile-container{
+  display: flex;
+  flex-direction: row;
+}

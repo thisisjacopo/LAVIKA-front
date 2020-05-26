@@ -12,49 +12,48 @@ const Nav = styled.nav`
     justify-items: center;
     justify-content: space-around;
     font-family: Mantra;
-    font-size: 1.3rem;
-    height: 5rem;
+    font-size: 1rem;
+    max-height: 3rem;
     width: 95%;
     margin-left: 2.5%;
-    margin-bottom: 2.5%;
     letter-spacing: 2px;
-
+    text-decoration: none;
     .navbar-btns {
       display: flex;
       justify-content: space-between;
       flex-direction: row;
       width: 50%;
       margin-left: 15rem;
-      color: white;
+      color: black;
       margin-top: 15px;
+      text-decoration: none;
     }
     .navbar-btns * {
       margin-left: 14px;
       text-decoration: none;
-      color: white;
+      color: black;
     }
     #xp-btn {
       text-decoration: none;
+      
     }
-
     .logo {
       font-family: Mantra;
       font-size: 2.3rem;
       padding: 2rem;
       margin-right: 2rem;
-      color: #272727;
+      color: white;
       margin-top: 15px;
     }
+    a{
+      text-decoration: none;
+    }
   }
-
   @media ${Device.tablet} {
     width: 100%;
-    background-color: blue;
   }
-
   @media ${Device.mobile} {
     width: 100%;
-    background-color: yellow;
   }
 `;
 
@@ -66,7 +65,7 @@ class Navigation extends Component {
 
     return (
       <Nav>
-        <Link to={"/home"} id="xp-btn">
+        <Link to={"/private"} id="xp-btn">
           <h4 className="logo">LAVIKA</h4>
         </Link>
 
@@ -78,21 +77,24 @@ class Navigation extends Component {
             <Link to={"/xp"} id="xp-btn">
               <h4>XP</h4>
             </Link>
-            <Link to={"/comunity"} id="comunity-btn">
-              <h4>COMUNITY</h4>
+            <Link to={"/private"} id="xp-btn">
+              <h4>about</h4>
             </Link>
-            <h4 onClick={logout}> Logout </h4>
+            <Link to={"/community"} id="comunity-btn">
+              <h4>community</h4>
+            </Link>
+            <h4 onClick={logout}>logout</h4>
           </div>
         ) : (
           <>
             <Link to="/login">
               {" "}
-              <h4 className="navbar-button">Login</h4>{" "}
+              <h4 className="navbar-button">login</h4>{" "}
             </Link>
             <br />
             <Link to="/signup">
               {" "}
-              <h4 className="navbar-button">Sign Up</h4>{" "}
+              <h4 className="navbar-button">signup</h4>{" "}
             </Link>
           </>
         )}

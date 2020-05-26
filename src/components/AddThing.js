@@ -12,16 +12,13 @@ const AddThing2 = styled.div`
   padding-bottom:10px;  
   margin: 0 auto;
 }
-
 input{
   margin:10px auto;
 } 
-
 @media ${Device.tablet} {
   width: 100%;
   background-color: blue;
 }
-
 @media ${Device.mobile} {
   width: 100%;
   background-color: yellow;
