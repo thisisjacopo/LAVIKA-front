@@ -12,16 +12,29 @@ import o5Sound from "../samples/o5.wav";
 import o6Sound from "../samples/o6.wav";
 import sSound from "../samples/s.wav";
 import rita from "rita";
-import AddThing from "../components/AddThing";
 import styled from "styled-components";
 import { Device } from "../components/Device";
 import axios from 'axios'
 
 let scene = {
+  name: '',
   strokeR: '',
   strokeG: '' ,
-  strokeB: ''
-}
+  strokeB: '',
+  
+  patterns: {
+    hPat: [1, 0, 1, 0],
+    kPat: [1, 0, 1, 0],
+    sPat: [0, 0, 0, 1],
+
+    o1Pat: [0, 0, 0, 0], 
+    o2Pat: [0, 0, 0, 0],
+    o3Pat: [0, 0, 0, 0],
+    o4Pat: [0, 0, 0, 0],
+    o5Pat: [0, 0, 0, 0],
+    o6Pat: [0, 0, 0, 0]
+  }
+ }
 
 class NewSketch extends React.Component {
   constructor(props) {
@@ -230,6 +243,7 @@ class NewSketch extends React.Component {
       "garage",
       "ghost",
     ];
+    self.nouns = nouns
     let hh, k, s, hPhrase, hPat, drums, arrOfSin, mic, recordButton;
     let recorder,
       soundFile,
@@ -348,18 +362,36 @@ class NewSketch extends React.Component {
       });
 
       // PATTERNS
+      if(self.props.scene) { 
+        const {hPat:hp, kPat:kp, sPat:sp,o1Pat:o1p, o2Pat:o2p, o3Pat:o3p, o4Pat:o4p, o5Pat:o5p, o6Pat:o6p} = self.props.scene.patterns
 
-      hPat = [1, 0, 1, 0];
-      kPat = [1, 0, 1, 0];
-      sPat = [0, 0, 0, 1];
-      o1Pat = [0, 0, 0, 0];
-      o2Pat = [0, 0, 0, 0];
-      o3Pat = [0, 0, 0, 0];
-      o4Pat = [0, 0, 0, 0];
-      o5Pat = [0, 0, 0, 0];
-      o6Pat = [0, 0, 0, 0];
+        hPat = hp
+        kPat = kp
+        sPat = sp
+        
+        o1Pat =  o1p
+        o2Pat = o2p
+        o3Pat = o3p
+        o4Pat =  o4p
+        o5Pat = o5p
+        o6Pat = o6p
+  
+      }else{
+        hPat = [1, 0, 1, 0];
+        kPat = [1, 0, 1, 0];
+        sPat = [0, 0, 0, 1];
 
+        o1Pat = [0, 0, 0, 0];
+        o2Pat = [0, 0, 0, 0];
+        o3Pat = [0, 0, 0, 0];
+        o4Pat = [0, 0, 0, 0];
+        o5Pat = [0, 0, 0, 0];
+        o6Pat = [0, 0, 0, 0];
+
+      }
+   
       arrOfSin = [o1Pat, o2Pat, o3Pat, o4Pat, o5Pat, o6Pat];
+      
 
       // PHRASES
       hPhrase = new p5.Phrase(
@@ -493,6 +525,9 @@ class NewSketch extends React.Component {
     };
 
     p.addIns = () => {
+      
+      
+
       let chosen = p.random(arrOfSin);
       i = p.floor(p.random(perDist));
       let ranC = p.random(255); // piks a random value between 0 and 255
@@ -523,6 +558,19 @@ class NewSketch extends React.Component {
         chosen.push(i);
         console.log(`sint added ${chosen}`);
       }
+      const [o1Pat, o2Pat, o3Pat, o4Pat, o5Pat, o6Pat] = arrOfSin
+
+      scene.patterns = {
+        hPat,
+        kPat,
+        sPat,
+        o1Pat, 
+        o2Pat, 
+        o3Pat, 
+        o4Pat, 
+        o5Pat, 
+        o6Pat
+      }
     };
 
     p.keyPressed = () => {
@@ -541,6 +589,10 @@ class NewSketch extends React.Component {
       scene.strokeR = strokeR.value()
       scene.strokeG = strokeG.value()
       scene.strokeB = strokeB.value()
+
+      
+
+      // scene.patters
 
       if (!self.state.isLoading) {
         self.setState({
@@ -665,6 +717,10 @@ class NewSketch extends React.Component {
   }
 
   saveScene = () => {
+    const ranInd = Math.floor(Math.random() * this.nouns.length)
+    let ranName = this.nouns[ranInd] +' '+ this.nouns[ranInd-1] 
+    scene.name = ranName
+
     axios.post(process.env.REACT_APP_API_URL + '/scenes/save', scene, { withCredentials: true })
     .then(res => {
         console.log(res);
@@ -674,6 +730,12 @@ class NewSketch extends React.Component {
         console.log("Error while adding the thing: ", err);
     });
    console.log(scene)
+
+  // 
+  }
+
+  toggleControls=()=>{
+    this.setState({showControls: !this.state.showControls})
   }
 
   render() {
@@ -686,7 +748,6 @@ class NewSketch extends React.Component {
         padding: 0 2.5%;
         min-height: 80vh;
       }
-
       @media ${Device.tablet} {
         display: flex;
         flex-direction: row;
@@ -694,7 +755,6 @@ class NewSketch extends React.Component {
         align-items: center;
         padding: 0 0.5%;
       }
-
       @media ${Device.mobile} {
         display: flex;
         flex-direction: column;
@@ -716,12 +776,10 @@ class NewSketch extends React.Component {
         max-height: 400px;
         overflow-y: scroll;
       }
-
       @media ${Device.tablet} {
         width: 100%;
         background-color: blue;
       }
-
       @media ${Device.mobile} {
         width: 100%;
         background-color: yellow;
@@ -738,12 +796,10 @@ class NewSketch extends React.Component {
         min-width: 30%;
         padding-top: 10px;
       }
-
       @media ${Device.tablet} {
         width: 100%;
         background-color: blue;
       }
-
       @media ${Device.mobile} {
         width: 100%;
         background-color: yellow;
@@ -758,8 +814,8 @@ class NewSketch extends React.Component {
         align-items: center;
         max-width: 30%;
         min-width: 30%;
+        max-height: 50vh;
       }
-
       @media ${Device.tablet} {
         width: 100%;
         display: flex;
@@ -769,34 +825,30 @@ class NewSketch extends React.Component {
         max-width: 97.5%;
         min-width: 97.5%;
       }
-
       @media ${Device.mobile} {
         max-width: 100%%;
         min-width: 100%%;
       }
     `;
 
+   
     return (
       <>
-        <MainDiv className="containerDiv">
+         <MainDiv className="containerDiv">
           <LyricContainer className="lyricContainer" id="lyricContainer" />
           <SketchContainer className="sketchContainer" id="sketchContainer">
-            <AddThing />
+         
             <button onClick={this.saveScene}>save scene</button>
-          </SketchContainer>
-          {/* <button
-            onClick={() =>
-              this.setState({ showControls: !this.state.showControls })
-            }
-          >
-            Show Controls
-          </button> */}
-          <ControlsContainer
-            // style={{ display: this.state.showControls ? "block" : "none" }}
+            </SketchContainer>
+
+           
+               <ControlsContainer
             className="controlsContainer"
             id="controlsContainer">
             </ControlsContainer>
-        </MainDiv>
+           
+           
+         </MainDiv>
       </>
     );
   }
