@@ -14,9 +14,16 @@
   src: url("./fonts/Comfortaa-Medium.ttf");
 }
 
+
+/* @font-face {
+  font-family: Courier;
+  src: url("./fonts/courier-maquina-de-escribir.ttf");
+} */
+
 body{
   background-image: url('./images/fondo.jpg');
-
+  background-size: cover;
+  color: white !important;
 }
 
 button{

@@ -23,7 +23,7 @@ let scene = {
   strokeB: ''
 }
 
-class NewSketch extends React.Component {
+class NewSketch2 extends React.Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
@@ -802,4 +802,4 @@ class NewSketch extends React.Component {
   }
 }
 
-export default NewSketch;
+export default NewSketch2;

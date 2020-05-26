@@ -17,7 +17,6 @@ const Nav = styled.nav`
     width: 95%;
     margin-left: 2.5%;
     margin-bottom: 2.5%;
-    border-bottom: solid black 1px;
     letter-spacing: 2px;
 
     .navbar-btns {
@@ -26,13 +25,13 @@ const Nav = styled.nav`
       flex-direction: row;
       width: 50%;
       margin-left: 15rem;
-      color: #272727;
+      color: white;
       margin-top: 15px;
     }
     .navbar-btns * {
       margin-left: 14px;
       text-decoration: none;
-      color: #272727;
+      color: white;
     }
     #xp-btn {
       text-decoration: none;

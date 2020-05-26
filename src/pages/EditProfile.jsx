@@ -68,70 +68,28 @@ class EditProfile extends Component {
         return (
       <div className="">
         <h2 className ="">Edit User</h2>
-        <form onSubmit={(e) => this.handleSubmit(e)}>
+        <form className="" onSubmit={(e) => this.handleSubmit(e)}>
           <div className="form-group">
-            <div className="">
             <img className ="profileImg" src={this.state.imgPath ? this.state.imgPath : 'nothing'} alt=""/>
-            </div>
-            
-            <input
-              type="file"
-              required
-              className="form-control"
-              id="idProfileImg"
-                name= "imgPath"
-              aria-describedby="image"
-              placeholder={this.state.imgPath}
-              onChange={(e) => this.handleFileUpload(e)}
-            />
+            <input type="file" required className="form-control" id="idProfileImg" name= "imgPath" aria-describedby="image" placeholder={this.state.imgPath} onChange={(e) => this.handleFileUpload(e)}/>
           </div>
           <div className="form-group">
             <label htmlFor="idName">Username</label>
-            <input
-              className="form-control"
-              id="idName"
-              aria-describedby="Name"
-              placeholder={this.state.username}
-              type="text"
-              name="username"
-              value={this.state.username || ''}
-              onChange={(e) => this.handleChange(e)}
-            />
+            <input className="form-control" id="idName" aria-describedby="Name" placeholder={this.state.username} type="text" name="username" value={this.state.username || ''} onChange={(e) => this.handleChange(e)}/>
           </div>
           <div className="form-group">
             <label>E-mail</label>
-            <input
-              className="form-control"
-              id="idLastName"
-              aria-describedby="Lastname"
-              placeholder={this.state.email}
-              type="email"
-              name="email"
-              value={this.state.email || ''}
-              onChange={(e) => this.handleChange(e)}
-            />
+            <input className="form-control" id="idLastName" aria-describedby="Lastname" placeholder={this.state.email} type="email" name="email" value={this.state.email || ''} onChange={(e) => this.handleChange(e)}/>
           </div>
           <div className="form-group">
             <label htmlFor="idSobreMi">About me</label>
-            <textarea
-              className="form-control"
-              id="idSobremi"
-              aria-describedby="AboutMe"
-              placeholder={this.state.aboutMe}
-              type="text"
-              name="aboutMe"
-              value={this.state.aboutMe || ''}
-              onChange={(e) => this.handleChange(e)}
-            />
+            <textarea className="form-control" id="idSobremi" aria-describedby="AboutMe" placeholder={this.state.aboutMe} type="text" name="aboutMe" value={this.state.aboutMe || ''} onChange={(e) => this.handleChange(e)} />
           </div>
-          
           <div className="text-center">
-          <button  className="btn btnBlue" type="submit">
-            Save Profile
-          </button>
+          <button  className="btn btnBlue" type="submit">Save Profile</button>
           </div>
         </form>
-            </div>
+        </div>
         )
     }
 }
