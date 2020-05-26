@@ -25,7 +25,7 @@ function Home() {
 `
   return (
     <div> 
-      <Title>HOME PAGE </Title>
+      <Title>HOME PAGE</Title>
    
     </div>
   )
