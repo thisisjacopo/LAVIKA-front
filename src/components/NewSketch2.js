@@ -12,9 +12,9 @@ import o5Sound from "../samples/o5.wav";
 import o6Sound from "../samples/o6.wav";
 import sSound from "../samples/s.wav";
 import rita from "rita";
-import AddThing from "../components/AddThing";
+import AddThing from "./AddThing";
 import styled from "styled-components";
-import { Device } from "../components/Device";
+import { Device } from "./Device";
 import axios from 'axios'
 
 let scene = {
@@ -23,7 +23,7 @@ let scene = {
   strokeB: ''
 }
 
-class NewSketch extends React.Component {
+class NewSketch2 extends React.Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
@@ -802,4 +802,4 @@ class NewSketch extends React.Component {
   }
 }
 
-export default NewSketch;
+export default NewSketch2;

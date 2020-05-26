@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withAuth } from './../lib/Auth';
 import styled from "styled-components";
 import { Device } from "../components/Device";
+import Navigation from "../components/Navigation";
 
 
 class Private extends Component {
@@ -28,6 +29,7 @@ class Private extends Component {
     `;
     return (
       <AboutInstr>
+      <Navigation/>
         <h1>About / Instruccions</h1>
        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum, accusantium? Provident, tempore eaque accusamus, nostrum odio mollitia ab ipsa, explicabo ad eligendi modi. Nesciunt ad porro labore dolorem ipsam quis!</h3>
 

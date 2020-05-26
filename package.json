@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.10.0",
     "@rebass/forms": "^4.0.6",
     "@rebass/preset": "^4.0.5",
     "@testing-library/jest-dom": "^4.2.4",
@@ -23,6 +22,7 @@
     "rebass": "^4.0.7",
     "rita": "^1.3.94",
     "styled-components": "^5.1.0",
+    "vanta": "^0.5.15",
     "wavesurfer": "^1.3.4",
     "wavesurfer.js": "^3.3.3"
   },

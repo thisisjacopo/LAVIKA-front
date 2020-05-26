@@ -1,10 +1,12 @@
+  
 import React, { Component } from "react";
 import axios from "axios";
-import { withAuth } from "./../lib/Auth";
+import { withAuth } from "../lib/Auth";
 import styled from "styled-components";
 import { Device } from "../components/Device";
+import Navigation from "../components/Navigation";
 
-class Comunity extends Component {
+class Community extends Component {
   // static contextType = SongsContext;
   state = {
     songs: [],
@@ -64,7 +66,6 @@ class Comunity extends Component {
         transition: 0.3s;
         letter-spacing: 1px;
         border-radius: 10px;
-
         h4 {
           font-size: 1.5rem;
           letter-spacing: 0.5px;
@@ -75,22 +76,18 @@ class Comunity extends Component {
           letter-spacing: 0.5px;
           font-weight: 400;
         }
-
         p {
           font-size: 0.8rem;
           letter-spacing: none;
           font-weight: 300;
         }
-
         :hover {
           box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
           background-color: grey;
         }
       }
-
       @media ${Device.laptop} {
       }
-
       @media ${Device.laptop} {
       }
     `;
@@ -100,7 +97,6 @@ class Comunity extends Component {
   position: relative;
   transform-style: preserve-3d;
   perspective: 800;
-
   .arc {
     position: absolute;
     content: "";
@@ -110,52 +106,42 @@ class Comunity extends Component {
     height: 100%;
     border-radius: 50%;
     border-bottom: 3px solid grey;
-
     @for $i from 1 through 3 {
       &:nth-child(#{$i}) {
         animation: rotate#{$i} 1.15s linear infinite;
       }
     }
-
     &:nth-child(1) {
       animation-delay: -1.0s;
     }
-
     &:nth-child(2) {
       animation-delay: -0.5s;
     }
-
     &:nth-child(3) {
       animation-delay: 0s;
     }
   }
 }
-
 @keyframes rotate1 {
   from {
     transform: rotateX(35deg) rotateY(-45deg) rotateZ(0);
   }
-
   to {
     transform: rotateX(35deg) rotateY(-45deg) rotateZ(1turn);
   }
 }
-
 @keyframes rotate2 {
   from {
     transform: rotateX(50deg) rotateY(10deg) rotateZ(0);
   }
-
   to {
     transform: rotateX(50deg) rotateY(10deg) rotateZ(1turn);
   }
 }
-
 @keyframes rotate3 {
   from {
     transform: rotateX(35deg) rotateY(55deg) rotateZ(0);
   }
-
   to {
     transform: rotateX(35deg) rotateY(55deg) rotateZ(1turn);
   }
@@ -178,6 +164,7 @@ class Comunity extends Component {
     `;
     return (
       <CommunityPage>
+      <Navigation />
         <Title>Community Page </Title>
         <GridContainer>
           {this.state.songs.length > 0 ? (
@@ -213,4 +200,4 @@ class Comunity extends Component {
   }
 }
 
-export default withAuth(Comunity);
+export default withAuth(Community);
