@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import p5 from "p5";
 import "p5/lib/addons/p5.sound";
 import "p5/lib/addons/p5.dom";
@@ -12,19 +12,20 @@ import o5Sound from "../samples/o5.wav";
 import o6Sound from "../samples/o6.wav";
 import sSound from "../samples/s.wav";
 import rita from "rita";
-import AddThing from "../components/AddThing";
 import styled from "styled-components";
 import { Device } from "../components/Device";
 import axios from 'axios'
-
+import { withAuth } from "../lib/Auth";
 
 
 let scene = {
+  canvas: 0,
   name: '',
   strokeR: '',
   strokeG: '' ,
   strokeB: '',
-  capture:'',
+  capture: '',
+  bpm: '60',
   
   patterns: {
     hPat: [1, 0, 1, 0],
@@ -256,7 +257,7 @@ class NewSketch extends React.Component {
       "garage",
       "ghost",
     ];
-    let saveFramex
+    
     self.nouns = nouns
     let hh, k, s, hPhrase, hPat, drums, arrOfSin, mic, recordButton;
     let recorder,
@@ -308,8 +309,10 @@ class NewSketch extends React.Component {
     }
 
     let playButton = p.createButton('play')
+    playButton.parent('#sketchContainer')
     playButton.mousePressed(p.startAudio)
     self.playButton = playButton
+
 
     p.setup = () => {
       p.getAudioContext().suspend();
@@ -324,20 +327,7 @@ class NewSketch extends React.Component {
       mic.start();
       self.mic = mic;
       
-      // layout
-
-      // let lyricContainer = p.createDiv('div')
-
-      // lyricContainer.parent('.containerDiv')
-
-      // let sketchContainer = p.createDiv('div')
-
-      // sketchContainer.parent('.containerDiv')
-
-      // let controlsContainer = p.createDiv('div')
-
-      // controlsContainer.parent('.containerDiv')
-
+    
       // get data buton
       let getArticleBtn = p.createButton("Get Random Lyric");
       getArticleBtn.mousePressed(getArticle);
@@ -501,12 +491,11 @@ class NewSketch extends React.Component {
       bpmCtr.input(() => {
         drums.setBPM(bpmCtr.value());
       });
-      drums.setBPM("60");
+      drums.setBPM(this.props.scene.bpm || "60");
       
       
       ////////////////////////new sliders
 
-      console.log(self , 'we are logging seft in here');
       if(self.props.scene) {
       let {strokeR: rValue, strokeG: gValue, strokeB: bValue} = this.props.scene
 
@@ -611,7 +600,7 @@ class NewSketch extends React.Component {
       scene.strokeR = strokeR.value()
       scene.strokeG = strokeG.value()
       scene.strokeB = strokeB.value()
-
+      scene.bpm = bpmCtr.value()
       
 
       // scene.patters
@@ -730,9 +719,20 @@ class NewSketch extends React.Component {
       }
     };
 
-    p.saveTheFrame =()=>{
+    p.saveTheFrame = async ()=>{
+
     p.saveFrames('out', 'png', 1, 1, data => {
       scene.capture = data[0].imageData 
+
+      axios.post(process.env.REACT_APP_API_URL + '/scenes/save', scene, { withCredentials: true })
+      .then(res => {
+        console.log(res);
+        // here you would redirect to some other page 
+      })
+      .catch(err => {
+        console.log("Error while adding the thing: ", err);
+    });
+
     });
   }
     self.saveTheFrame = p.saveTheFrame
@@ -748,30 +748,41 @@ class NewSketch extends React.Component {
     }
   }
 
-  saveScene = () => {
+  saveScene = async () => {
 
-    // console.log(this.canvas.toDataURL())
-
-    this.saveTheFrame()
     const ranInd = Math.floor(Math.random() * this.nouns.length)
     let ranName = this.nouns[ranInd] +' '+ this.nouns[ranInd-1] 
-    scene.name = ranName
+    scene.name = ranName 
+    await this.saveTheFrame()
+    this.setState({saved:true})
+    setTimeout( () => this.setState({saved:false}), 2000 )
+  }
+  updateScene = async () => {
+    scene.capture = this.props.scene.capture
+    scene.name = this.props.scene.name
+    scene.sceneId = this.props.scene._id
 
-    axios.post(process.env.REACT_APP_API_URL + '/scenes/save', scene, { withCredentials: true })
+    axios.put(process.env.REACT_APP_API_URL + '/scenes/update', scene, { withCredentials: true })
     .then(res => {
-        console.log(res);
-        // here you would redirect to some other page 
+      console.log(res);
+      // here you would redirect to some other page 
     })
     .catch(err => {
-        console.log("Error while adding the thing: ", err);
-    });
-   console.log(scene)
-
-  // 
+      console.log("Error while adding the thing: ", err);
+  });
+    // await this.saveTheFrame()
   }
 
   toggleControls=()=>{
     this.setState({showControls: !this.state.showControls})
+  }
+
+  isTheArtist=()=>{
+    if (this.props.scene){
+      return this.props.scene.user === this.props.user._id
+    } else{
+      return false
+    }
   }
 
   render() {
@@ -867,29 +878,36 @@ class NewSketch extends React.Component {
       }
     `;
 
+
+
    
     return (
       <>
          <MainDiv className="containerDiv">
           <LyricContainer className="lyricContainer" id="lyricContainer" />
           <SketchContainer className="sketchContainer" id="sketchContainer">
-            {/* <AddThing /> */}
          
-            <button onClick={this.saveScene}>save scene</button>
+       {
+         this.isTheArtist() 
+         ?  <button onClick={this.updateScene}>Update scene</button>
+         : <button onClick={this.saveScene}>Save scene</button>
+       }  
+       {
+        this.state.saved
+         ? <div> <h1>Saved!</h1>  </div>
+         :null
+       }
+            
             </SketchContainer>
-            {/* <button onClick={this.toggleControls}> Show Controls </button> */}
 
-           
                <ControlsContainer
             className="controlsContainer"
             id="controlsContainer">
             </ControlsContainer>
-           
-           
          </MainDiv>
       </>
     );
   }
 }
 
-export default NewSketch;
+export default withAuth(NewSketch);

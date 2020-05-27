@@ -14,16 +14,9 @@
   src: url("./fonts/Comfortaa-Medium.ttf");
 }
 
-
-/* @font-face {
-  font-family: Courier;
-  src: url("./fonts/courier-maquina-de-escribir.ttf");
-} */
-
 body{
   background-image: url('./images/fondo.jpg');
-  background-size: cover;
-  color: white !important;
+
 }
 
 button{
@@ -36,7 +29,10 @@ button{
   font-family: Comfortaa;
   font-size: 20px;
   height: 3rem;
-}ç
+}
+button:hover{
+  background-color: rgba(238, 252, 249, 0.37);
+}
 input[type=range] {
   -webkit-appearance: none;
   width: 100%;
@@ -122,7 +118,7 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
   background: rgba(158, 185, 187, 0.95);
 }
-.profile-container{
-  display: flex;
-  flex-direction: row;
+.nameScene{
+  padding: 30px;
+  color: rgb(36, 36, 36);
 }

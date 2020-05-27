@@ -5,58 +5,52 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const LoginPage = styled.div`
-  width: 95%;
-  min-height: 100vh;
   display: flex;
+  font-family: courier;
   flex-direction: column;
   align-items: center;
   justify-items: center;
-  justify-content: space-around;
   letter-spacing:2px;
-  h1{
-    font-size:4rem;
-    font-weight: 200rem;
-  }
-  p {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+
+  a:link {
+    text-decoration: none;
+    color: black;
   }
 `;
 const LoginForm = styled.form`
-  width: 25rem;
-  height: 25rem;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-items: center;
   padding: 2rem;
   text-align: center;
   margin: 1rem;
-  border: 2px solid black;
 `;
 
 const Label = styled.label`
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 400;
   align-items: center;
   justify-items: center;
   text-align: center;
 `;
+
 const Input = styled.input`
-margin: 1rem;
+  margin: 1rem;
   background: none;
-  font-size: 2rem;
+  font-size: 1em;
+  padding: 1em 6em;
+  text-align: center;
   color: #272727;
   border: none;
-  border-bottom: 2px solid black;
-  align-items: center;
-  justify-items: center;
-  text-align: center;
+  border-bottom: 1px solid black;
   cursor: pointer;
 `;
+
 const LoginInput = styled.input`
+  font-family: courier;
   background: none;
-  font-size: 2rem;
-  color: #6A041D;
+  font-size: 1rem;
   border: 2px solid black;
   align-items: center;
   justify-items: center;
@@ -94,7 +88,6 @@ class Login extends Component {
     return (
       <LoginPage>
         <Navigation />
-        <h1>Login</h1>
 
         <LoginForm onSubmit={this.handleFormSubmit}>
           <Label>Username:</Label>
