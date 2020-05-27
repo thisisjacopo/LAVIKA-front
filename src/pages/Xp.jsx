@@ -6,6 +6,7 @@ import { withAuth } from './../lib/Auth';
 import axios from 'axios'
 import styled from "styled-components";
 import { Device } from "../components/Device";
+import Navigation from "../components/Navigation";
 
 const XpContainer = styled.div`
 @media ${Device.laptop} {
@@ -74,6 +75,7 @@ class Xp extends Component {
 
   return (
     <XpContainer>
+    <Navigation />
       <button className="buttonSwitch" onClick={this.switchCanvas}>Switch experience</button>
     {
       this.state.scene === null 

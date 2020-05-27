@@ -5,157 +5,115 @@ import { withAuth } from "../lib/Auth";
 import styled from "styled-components";
 import { Device } from "../components/Device";
 import Navigation from "../components/Navigation";
+import { Link } from "react-router-dom";
 
 class Community extends Component {
   // static contextType = SongsContext;
   state = {
-    songs: [],
+    scenes: [],
   };
 
   componentDidMount() {
     axios
       .get("http://localhost:5000/scenes", { withCredentials: true })
-      .then((response) => this.setState({ songs: response.data }));
+      .then((response) => this.setState({ scenes: response.data }));
+      console.log(this.state.scenes);
   }
 
   render() {
-    const { user } = this.props;
-    const songs = this.state.songs;
-
-    const CommunityPage = styled.div`
-      max-width: 95%;
-      margin-left: 2.5%;
-      align-items: center;
-      justify-items: center;
-      text-align: center;
-      color: black;
-    `;
-    const DescriptionBox = styled.div`
-      max-width: 10rem;
-      max-height: 10rem;
-      justify-items: center;
-      align-items: center;
-      text-align: center;
-      overflow-wrap: break-word;
-      margin: 1rem;
-      margin-top: 2rem;
-    `;
-    const GridContainer = styled.div`
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      grid-gap: 5px;
-      grid-auto-rows: min-max(15rem);
-      justify-items: center;
-      align-items: center;
-    `;
-
-    const Card = styled.div`
-      @media ${Device.laptop} {
-        cursor: pointer;
-        background-color: none;
-        border: 1px solid black;
-        display: flex;
-        flex-direction: column;
-        max-width: 20rem;
-        height: 20rem;
-        align-items: center;
-        justify-items: center;
-        margin: 1rem;
-        padding: 1rem;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        transition: 0.3s;
-        letter-spacing: 1px;
-        border-radius: 10px;
-        h4 {
-          font-size: 1.5rem;
-          letter-spacing: 0.5px;
-          font-weight: 400;
-        }
-        h6 {
-          font-size: 1.2rem;
-          letter-spacing: 0.5px;
-          font-weight: 400;
-        }
-        p {
-          font-size: 0.8rem;
-          letter-spacing: none;
-          font-weight: 300;
-        }
-        :hover {
-          box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-          background-color: grey;
-        }
-      }
-      @media ${Device.laptop} {
-      }
-      @media ${Device.laptop} {
-      }
-    `;
-
-    const Loader = styled.div`
-    @media ${Device.laptop} {
-  position: relative;
-  transform-style: preserve-3d;
-  perspective: 800;
-  .arc {
-    position: absolute;
-    content: "";
-    top: 0;
-    left: 0;
+  
+    const scenes = this.state.scenes;
+    const ScenesDiv = styled.div`
     width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border-bottom: 3px solid grey;
-    @for $i from 1 through 3 {
-      &:nth-child(#{$i}) {
-        animation: rotate#{$i} 1.15s linear infinite;
-      }
-    }
-    &:nth-child(1) {
-      animation-delay: -1.0s;
-    }
-    &:nth-child(2) {
-      animation-delay: -0.5s;
-    }
-    &:nth-child(3) {
-      animation-delay: 0s;
-    }
-  }
-}
-@keyframes rotate1 {
-  from {
-    transform: rotateX(35deg) rotateY(-45deg) rotateZ(0);
-  }
-  to {
-    transform: rotateX(35deg) rotateY(-45deg) rotateZ(1turn);
-  }
-}
-@keyframes rotate2 {
-  from {
-    transform: rotateX(50deg) rotateY(10deg) rotateZ(0);
-  }
-  to {
-    transform: rotateX(50deg) rotateY(10deg) rotateZ(1turn);
-  }
-}
-@keyframes rotate3 {
-  from {
-    transform: rotateX(35deg) rotateY(55deg) rotateZ(0);
-  }
-  to {
-    transform: rotateX(35deg) rotateY(55deg) rotateZ(1turn);
-  }
-}
+    float: right;
+    height:100%;
+    display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-gap: 2px;
+          grid-auto-rows: min-max(15rem);
+          justify-items: center;
+          align-items: center;
+          border-radius:10%
+    `
+  
+    const ScenesCards = styled.div`
+    cursor: pointer;
+    display: flex;
+            flex-direction: column;
+            max-width: 20rem;
+            height: 20rem;
+            align-items: center;
+            justify-items: center;
+            margin: 1rem;
+            position: relative;
+            
+    
+    `
+
+    const SceneImg = styled.img`
+    width:20rem;
+    height: 20rem;
+    object-fit: cover;
+    transition: 0.5s;
+    opacity:1;
+    :hover {
+      opacity: 0.1;
     }
     
-  `;
-
-    const Audio = styled.audio`
-      width: 15rem;
-      margin-top: 2rem;
-    `;
-
+    `
+    
+    const SceneText = styled.div`
+    width:20rem;
+    height: 20rem;
+    background: rgba(200, 200, 200, 0.72);
+    color: #fff;
+    position: absolute;
+    font-family: Mantra;
+    display:flex;
+    flex-direction: row;
+    transition: 0.5s;
+    opacity:0;
+    
+            :hover{
+              opacity:1;
+            }
+      
+    a{
+      text-decoration: none;
+      color: black;
+      font-size: 1rem;
+    }
+    `
+    const CardA = styled.a`
+    height: 1rem;
+    width: 1rem;
+    background-color: #a71b1b;
+    border: 2px solid black;
+    border-radius: 10%;
+    text-align: center;
+    padding:17px;
+    justify-content: center;
+    margin: 10px;
+    cursor: pointer;
+    opacity: 0.75;
+    `
+    
     const Title = styled.h1`
+          font-family: Mantra;
+          font-size: 3rem;
+          color: white;
+          margin: 60px auto;
+          text-align: center;
+          
+        `;
+       
+        const Mail = styled.h3`
+        font-family: Mantra;
+        font-size: 1rem;
+        color: white;
+        margin-top: 2rem;
+      `;
+        const Info = styled.h3`
       font-family: Mantra;
       font-size: 3rem;
       color: black;
@@ -163,39 +121,30 @@ class Community extends Component {
       margin-top: 3rem;
     `;
     return (
-      <CommunityPage>
-      <Navigation />
+      <div>
         <Title>Community Page </Title>
-        <GridContainer>
-          {this.state.songs.length > 0 ? (
-            songs.map((song) => {
-              return (
-                <Card id="card" key={song._id}>
-                  <h4>Artist:</h4>
-                  <h6>{song.artist}</h6>
-                  <h4>Title:</h4>
-                  <h6>{song.name}</h6>
-                  <Audio controls>
-                    <source src={song.urlPath} type="audio/ogg" />
-                    <source src={song.urlPath} type="audio/mpeg" />
-                    Your browser does not support the audio tag.
-                  </Audio>
-                  <DescriptionBox>
-                    <h8>Description:</h8>
-                    <p>{song.description}</p>
-                  </DescriptionBox>
-                </Card>
-              );
-            })
-          ) : (
-            <Loader class="loader">
-              <div class="arc"></div>
-              <div class="arc"></div>
-              <div class="arc"></div>
-            </Loader>
-          )}
-        </GridContainer>
-      </CommunityPage>
+        <ScenesDiv>
+              { this.state.scenes !== undefined 
+              ? this.state.scenes.map(scene=>{
+                  return(
+                     <ScenesCards className="sceneCard" key={scene._id}>
+                  
+                      <SceneImg className="imgCard" src={scene.capture} alt="asd"/> 
+                      <SceneText>
+                     
+                     <Link to={`/xp/${scene._id}`}> 
+                      <h2 className="nameScene">{scene.name}</h2>
+                      <h2 className="userScene">{scene.user.username}</h2>
+                     </Link> 
+                     
+                      </SceneText>
+                    </ScenesCards> 
+                  )
+                })
+                : null
+              }
+            </ScenesDiv>
+      </div>
     );
   }
 }

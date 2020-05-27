@@ -49,6 +49,7 @@ class Private extends Component {
         position: absolute;
         text-align: center;
         font-family: Courier;
+        color: white;
         width: 45%;
         top: 50%;
         left: 50%;

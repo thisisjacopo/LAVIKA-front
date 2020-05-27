@@ -11,6 +11,11 @@ const LoginPage = styled.div`
   align-items: center;
   justify-items: center;
   letter-spacing:2px;
+  color: white;
+
+  p {
+    margin-top: 8%;
+  }
 
   a:link {
     text-decoration: none;
@@ -22,9 +27,8 @@ const LoginForm = styled.form`
   flex-direction: column;
   align-items: center;
   justify-items: center;
-  padding: 2rem;
+  margin-top: 10%;
   text-align: center;
-  margin: 1rem;
 `;
 
 const Label = styled.label`
@@ -36,12 +40,13 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  margin: 1rem;
+  font-family: courier;
+  margin: 0.7rem;
   background: none;
   font-size: 1em;
   padding: 1em 6em;
   text-align: center;
-  color: #272727;
+  color: white;
   border: none;
   border-bottom: 1px solid black;
   cursor: pointer;
@@ -51,7 +56,8 @@ const LoginInput = styled.input`
   font-family: courier;
   background: none;
   font-size: 1rem;
-  border: 2px solid black;
+  color: white;
+  border: 2px solid white;
   align-items: center;
   justify-items: center;
   text-align: center;
@@ -61,7 +67,7 @@ const LoginInput = styled.input`
   cursor: pointer;
   :hover{
     background-color: white;
-    color: #6A041D;
+    color: black;
   }
 `;
 
@@ -111,7 +117,7 @@ class Login extends Component {
         </LoginForm>
         <p>
           {" "}
-          Don't have account yet? <Link to={"/login"}>Signup</Link>
+          Don't have account yet? <Link to={"/signup"}>Signup</Link>
         </p>
       </LoginPage>
     );

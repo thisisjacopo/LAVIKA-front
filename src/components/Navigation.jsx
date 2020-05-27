@@ -12,7 +12,7 @@ const Nav = styled.nav`
     justify-items: center;
     justify-content: space-around;
     font-family: Mantra;
-    font-size: 1rem;
+    font-size: 1.2rem;
     max-height: 3rem;
     width: 95%;
     margin-left: 2.5%;

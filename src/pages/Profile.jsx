@@ -1,3 +1,5 @@
+
+import Navigation from "../components/Navigation";
 import React, { Component } from "react";
 import axios from "axios";
 import { withAuth } from "./../lib/Auth";
@@ -86,7 +88,8 @@ background-color: #a71b1b;
 border: 2px solid black;
 border-radius: 10%;
 text-align: center;
-padding:3px;
+padding:7px;
+margin-top:10px;
 cursor: pointer;
 opacity: 0.75;
 `
@@ -134,6 +137,7 @@ class Profile extends Component {
     const { user } = this.state;
     return (
       <ProfilePage>
+      <Navigation />
         {!user ? (
           "loading"
         ) : (

@@ -5,69 +5,71 @@ import Navigation from "../components/Navigation";
 import styled from "styled-components";
 
 const SignupPage = styled.div`
-  width: 95%;
-  min-height: 100vh;
+  display: flex;
+  font-family: courier;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  letter-spacing:2px;
+  color: white;
+
+  p {
+    margin-top: 5%;
+    margin-bottom: 6%
+  }
+
+  a:link {
+    text-decoration: none;
+    color: black;
+  }
+
+  a:visited { text-decoration: none; color:white; }
+  a:hover, a:active { text-decoration: none; color:black }
+`;
+const SignupForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-items: center;
-  justify-content: space-around;
-  letter-spacing: 2px;
-  h1 {
-    font-size: 3rem;
-    font-weight: 200rem;
-  }
-  p {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-`;
-const SignupForm = styled.form`
-  width: 25rem;
-  height: 30rem;
-  flex-direction: column;
-  align-items: center;
-  justify-items: center;
-  padding: 2rem;
+  margin-top: 8%;
   text-align: center;
-  margin: 1rem;
-  border: 2px solid black;
 `;
 
 const Label = styled.label`
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 400;
   align-items: center;
   justify-items: center;
   text-align: center;
 `;
 const Input = styled.input`
+  font-family: courier;
   margin: 0.7rem;
   background: none;
-  font-size: 2rem;
-  color: #272727;
-  border: none;
-  border-bottom: 2px solid black;
-  align-items: center;
-  justify-items: center;
+  font-size: 1em;
+  padding: 1em 6em;
   text-align: center;
+  color: white;
+  border: none;
+  border-bottom: 1px solid black;
   cursor: pointer;
 `;
 const SignupInput = styled.input`
+  font-family: courier;
   background: none;
-  font-size: 2rem;
-  color: #6a041d;
-  border: 2px solid black;
+  font-size: 1rem;
+  color: white;
+  border: 2px solid white;
   align-items: center;
   justify-items: center;
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
   width: 8rem;
   height: 3rem;
   cursor: pointer;
-  :hover {
+  :hover{
     background-color: white;
-    color: #6a041d;
+    color: black;
   }
 `;
 
@@ -93,7 +95,6 @@ class Signup extends Component {
     return (
       <SignupPage>
         <Navigation />
-        <h1>Sign Up</h1>
 
         <SignupForm onSubmit={this.handleFormSubmit}>
           <Label>Username:</Label>
