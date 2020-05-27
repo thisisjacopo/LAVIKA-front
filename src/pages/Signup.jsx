@@ -13,12 +13,10 @@ const SignupPage = styled.div`
   justify-items: center;
   justify-content: space-around;
   letter-spacing: 2px;
-
   h1 {
     font-size: 3rem;
     font-weight: 200rem;
   }
-
   p {
     font-size: 1.5rem;
     margin-bottom: 1rem;

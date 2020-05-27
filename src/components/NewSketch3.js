@@ -686,7 +686,6 @@ class NewSketch3 extends React.Component {
         padding: 0 2.5%;
         min-height: 80vh;
       }
-
       @media ${Device.tablet} {
         display: flex;
         flex-direction: row;
@@ -694,7 +693,6 @@ class NewSketch3 extends React.Component {
         align-items: center;
         padding: 0 0.5%;
       }
-
       @media ${Device.mobile} {
         display: flex;
         flex-direction: column;
@@ -716,12 +714,10 @@ class NewSketch3 extends React.Component {
         max-height: 400px;
         overflow-y: scroll;
       }
-
       @media ${Device.tablet} {
         width: 100%;
         background-color: blue;
       }
-
       @media ${Device.mobile} {
         width: 100%;
         background-color: yellow;
@@ -738,12 +734,10 @@ class NewSketch3 extends React.Component {
         min-width: 30%;
         padding-top: 10px;
       }
-
       @media ${Device.tablet} {
         width: 100%;
         background-color: blue;
       }
-
       @media ${Device.mobile} {
         width: 100%;
         background-color: yellow;
@@ -769,7 +763,6 @@ class NewSketch3 extends React.Component {
         max-width: 97.5%;
         min-width: 97.5%;
       }
-
       @media ${Device.mobile} {
         max-width: 100%%;
         min-width: 100%%;

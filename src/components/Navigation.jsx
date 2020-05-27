@@ -40,7 +40,6 @@ const Nav = styled.nav`
       text-decoration: none;
       
     }
-
     .logo {
       font-family: Mantra;
       font-size: 2.3rem;
@@ -54,15 +53,11 @@ const Nav = styled.nav`
       text-decoration: none;
     }
   }
-
   @media ${Device.tablet} {
     width: 100%;
-
   }
-
   @media ${Device.mobile} {
     width: 100%;
-
   }
 `;
 
@@ -89,18 +84,18 @@ class Navigation extends Component {
             <Link to={"/comunity"} id="comunity-btn">
               <h4>Community</h4>
             </Link>
-            <h4 onClick={logout}> Logout </h4>
+            <h4 onClick={logout}>logout</h4>
           </div>
         ) : (
           <>
             <Link to="/login">
               {" "}
-              <h4 className="navbar-button">Login</h4>{" "}
+              <h4 className="navbar-button">login</h4>{" "}
             </Link>
             <br />
             <Link to="/signup">
               {" "}
-              <h4 className="navbar-button">Sign Up</h4>{" "}
+              <h4 className="navbar-button">signup</h4>{" "}
             </Link>
           </>
         )}
