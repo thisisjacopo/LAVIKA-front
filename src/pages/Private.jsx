@@ -62,9 +62,9 @@ class Private extends Component {
       <Navigation/>
       <div className="aboutInstructions">
       <h1>About / Instruccions</h1>
-       <h3>Lavika is an app where you can interact with a canvas and produce music and visuals with 3 different options of themes. It was created by Jacopo, Milton and Sofía, three design and music enthusiasts that met through their also common interest, creative coding
-      To get started, please navigate to XP, where you'll find a canvas, follow these instructions to start the experience. Click on the upper left corner to add a HI-HAT. For adding a KICK, click on the top right of the canvas. If you wanna add a SNARE,
-      go for lower left corner and last but not least, you'll finde the SYNTH on the bottom right. HAPPY CREATING.
+       <h3>Lavika is an app where you can interact with a canvas and produce music and visuals with 3 different options of themes. It was created by Jacopo, Milton and Sofía, three design and music enthusiasts that met through their also common interest, creative coding.
+      To get started, please navigate to XP, where you'll find a canvas, follow these instructions to start the experience. Right after hitting play, click on the upper left corner to add a HI-HAT. For adding a KICK, click on the top right of the canvas. If you wanna add a SNARE,
+      go for lower left corner and last but not least, you'll find the SYNTH on the bottom right. If you feel like singing, get a random lyric, record and download your beautifully produced song.
        </h3>
        </div>
        <div className="instrumentsContainer">

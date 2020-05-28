@@ -15,7 +15,7 @@ class Community extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/scenes", { withCredentials: true })
+      .get(process.env.REACT_APP_API_URL + "/scenes", { withCredentials: true })
       .then((response) => this.setState({ scenes: response.data }));
       console.log(this.state.scenes);
   }
@@ -122,6 +122,7 @@ class Community extends Component {
     `;
     return (
       <div>
+      <Navigation />
         <Title>Community Page </Title>
         <ScenesDiv>
               { this.state.scenes !== undefined 

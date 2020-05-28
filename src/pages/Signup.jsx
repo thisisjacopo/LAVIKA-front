@@ -49,21 +49,23 @@ const Input = styled.input`
   font-size: 1em;
   padding: 1em 6em;
   text-align: center;
-  color: white;
+  color: yellow;
   border: none;
   border-bottom: 1px solid black;
   cursor: pointer;
 `;
+
 const SignupInput = styled.input`
   font-family: courier;
   background: none;
   font-size: 1rem;
-  color: white;
+  color: yellow;
   border: 2px solid white;
   align-items: center;
   justify-items: center;
   text-align: center;
   margin-top: 2.5rem;
+  border-radius: 5%;
   width: 8rem;
   height: 3rem;
   cursor: pointer;

@@ -11,12 +11,9 @@ import Navigation from "../components/Navigation";
 const XpContainer = styled.div`
 @media ${Device.laptop} {
   text-align:center
-  
 }
 .buttonSwitch{
-  margin: 0 auto;
-  width: 130px;
-  font-size: 14px
+  margin-top: 25px
 } 
 @media ${Device.tablet} {
 }
@@ -29,8 +26,9 @@ class Xp extends Component {
   super(props)
   this.state = {
     scene: null,
-    canvas: 0
-   
+    canvas: 0,
+    saved: false,
+    message: undefined
   }
 }
   componentDidMount() {
@@ -42,7 +40,7 @@ class Xp extends Component {
       .then((response) => {
         let scene = response.data
         const canvas = scene.canvas
-        this.setState({scene,canvas})
+        this.setState({scene, canvas})
 
       }).catch((err) => {
         console.log(err);
@@ -50,6 +48,17 @@ class Xp extends Component {
     } else {
       this.setState({scene: false})
     }
+  }
+
+  savedSceneMessage = (type) => {
+    let message 
+    if(type === 'saved') {
+      message = 'saved'
+    } else if(type === 'updated') {
+      message = 'updated'
+    }
+
+    this.setState({saved:true, message}, () => setTimeout( () => this.setState({saved:false, message:undefined}), 2000 ))
   }
 
   switchCanvas = ()=>{
@@ -60,16 +69,16 @@ class Xp extends Component {
     let canvas;
     switch(this.state.canvas){
       case(0):
-      canvas = <NewSketch scene = {this.state.scene} />
+      canvas = <NewSketch scene = {this.state.scene} savedSceneMessage={this.savedSceneMessage} />
       break;
       case(1):
-      canvas = <NewSketch2 scene = {this.state.scene} />
+      canvas = <NewSketch2 scene = {this.state.scene} savedSceneMessage={this.savedSceneMessage}  />
       break;
       case(2):
-      canvas = <NewSketch3 scene = {this.state.scene} />
+      canvas = <NewSketch3 scene = {this.state.scene} savedSceneMessage={this.savedSceneMessage} />
       break;
       default:
-      canvas = <NewSketch scene = {this.state.scene} />
+      canvas = <NewSketch scene = {this.state.scene} savedSceneMessage={this.savedSceneMessage} />
       break; 
     }
 
@@ -81,8 +90,12 @@ class Xp extends Component {
       this.state.scene === null 
       ? 'put spinner here' 
       : canvas
-  
     }
+    {
+        this.state.saved
+         ? <div> <h1 style={{color:'white'}}>{this.state.message}</h1></div>
+         :null
+       }
     </XpContainer>
   )
 }

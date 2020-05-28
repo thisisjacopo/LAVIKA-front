@@ -2,15 +2,15 @@ import React from "react";
 import p5 from "p5";
 import "p5/lib/addons/p5.sound";
 import "p5/lib/addons/p5.dom";
-import hhSound from "../samples/hh.wav";
-import kSound from "../samples/k.wav";
-import o1Sound from "../samples/o1.wav";
-import o2Sound from "../samples/o2.wav";
-import o3Sound from "../samples/o3.wav";
-import o4Sound from "../samples/o4.wav";
-import o5Sound from "../samples/o5.wav";
-import o6Sound from "../samples/o6.wav";
-import sSound from "../samples/s.wav";
+import hhSound from "../samples/samples2/hh.wav";
+import kSound from "../samples/samples2/k.wav";
+import o1Sound from "../samples/samples2/o1.wav";
+import o2Sound from "../samples/samples2/o2.wav";
+import o3Sound from "../samples/samples2/o3.wav";
+import o4Sound from "../samples/samples2/o4.wav";
+import o5Sound from "../samples/samples2/o5.wav";
+import o6Sound from "../samples/samples2/o6.wav";
+import sSound from "../samples/samples2/s.wav";
 import rita from "rita";
 import styled from "styled-components";
 import { Device } from "../components/Device";
@@ -294,6 +294,8 @@ class NewSketch2 extends React.Component {
 
     let alphaStroke, betaStroke;
     let state = 0;
+    let yoff = 0.0; 
+    let offset = 0
     //deleted array of words to replace Chevrolet
 
     //perDist per instrument
@@ -313,6 +315,8 @@ class NewSketch2 extends React.Component {
     playButton.parent('#sketchContainer')
     playButton.mousePressed(p.startAudio)
     self.playButton = playButton
+
+    let xoff = 0.0;
 
 
     p.setup = () => {
@@ -501,7 +505,7 @@ class NewSketch2 extends React.Component {
       ////////////////////////new sliders
 
       if(self.props.scene) {
-      let {strokeR: rValue, strokeG: gValue, strokeB: bValue} = this.props.scene
+      let {strokeR: rValue, strokeG: gValue, strokeB: bValue, strokeAlpha: alphaValue, strokeBeta: betaValue} = this.props.scene
 
       //R
       strokeR = p.createSlider(0, 250, rValue , 1)
@@ -518,11 +522,11 @@ class NewSketch2 extends React.Component {
       strokeB.parent("#controlsContainer")
       //strokeB.class('blue')
       
-      alphaStroke = p.createSlider(0, 2550, alphaStroke, 1)
+      alphaStroke = p.createSlider(0, 2550, alphaValue, 1)
       alphaStroke.parent("#controlsContainer")
      
 
-      betaStroke = p.createSlider(0, 2500, betaStroke, 1)
+      betaStroke = p.createSlider(0, 2500, betaValue, 1)
       betaStroke.parent("#controlsContainer")
      
       
@@ -551,7 +555,7 @@ class NewSketch2 extends React.Component {
      
       }
       
-    
+      p.background(255, 165, 0)
     };
 
     p.addIns = () => {
@@ -622,77 +626,45 @@ class NewSketch2 extends React.Component {
       scene.alphaStroke = alphaStroke.value()
       scene.betaStroke = betaStroke.value()
       scene.bpm = bpmCtr.value()
-      
-
-      // scene.patters
 
       if (!self.state.isLoading) {
         self.setState({
           isLoading: false,
         });
       } else {
-        p.frameRate(17);
-        // get the overall volume (between 0 and 1.0)
-        let vol = mic.getLevel() * strokeB.value() / 10;
-        self.vol = vol
-        p.fill(strokeB.value());
-        p.noStroke();
-        p.smooth();
-        // Draw an ellipse with height based on volume
-        let h = p.map(vol, 0, 1, p.random(1233), 0);
-        p.ellipse((p.width / 1.2) * vol, h - 25, vol * 400, vol * 400);
-        drawPointy(betaStroke.value());
-        drawPointy(10);
-        drawArc();
-        p.background(vol * strokeR.value(), vol * strokeG.value(), vol * strokeB.value(), 7);
 
-        function drawPointy(weigh) {
-          p.stroke(vol * strokeR.value() );
-          p.smooth();
-          p.strokeWeight(p.random(weigh));
-          p.point(p.random(p.height * 1.6), p.random(p.width * 1.6));
+        let vol = mic.getLevel() * strokeG.value()*100;
+
+        p.background(vol * 2, 255, vol, 0.1);
+        p.noStroke()
+        p.smooth()
+        let r = p.random(strokeR.value())
+        p.fill((vol * betaStroke.value() / 40) % 255, (vol* betaStroke.value() / 500) - 60, ((vol * 2) + 40), r);
+        let xoff = 0;
+        for (let x = 0; x <= strokeB.value(); x += 1) {
+          let y = p.map(p.noise(xoff, yoff), 0, 1, 20, 300);
+          p.vertex(x, y);
+          xoff += 0.01 + (betaStroke.value()/1000);
+          p.ellipse(y + (vol / 2) * xoff * 2, y + (vol / alphaStroke.value()), y - (vol), y - vol * 13)
+
+
         }
 
-        function drawArc() {
-          p.arc(
-            p.random(betaStroke.value()),
-            p.random(2000),
-            vol * betaStroke.value()/20,
-            vol * betaStroke.value()/30,
-            vol * betaStroke.value()/24,
-            p.HALF_PI
-          );
-          p.fill(p.random());
-          p.noStroke();
-          p.arc(
-            p.random(vol * 2000),
-            p.random(betaStroke.value()),
-            vol * 444,
-            vol * 444,
-            p.HALF_PI,
-            p.PI
-          );
-          p.arc(vol * 4400, p.random(300), 700, 70, p.PI, p.PI + p.QUARTER_PI);
-          p.arc(
-            vol * alphaStroke.value(),
-            vol * alphaStroke.value(),
-            vol * alphaStroke.value(),
-            vol * alphaStroke.value(),
-            p.PI + p.QUARTER_PI,
-            p.TWO_PI
-          );
-        }
+        yoff += 0.01;
+ 
       }
     };
 
     const getArticle = async () => {
       let poem = "";
-      let articleRaw = `http://poetrydb.org//author/Shakespeare;Sonnet`;
+      let articleRaw = `https://newsapi.org/v2/everything?q=music&apiKey=adb3c70aeb8d496d9fd30a6d53b05fce`;
       const response = await fetch(articleRaw);
       const article1 = await response.json();
-      let lines = p.random(article1).lines;
-      lines.forEach((x) => (poem += x));
-      let rs = new rita.RiString(poem);
+      const ranInd = Math.floor(Math.random() * article1.articles.length)
+      let newLines = article1.articles[ranInd].content
+      // let lines = p.random(newLines).lines;
+      // lines.forEach((x) => (poem += x));
+      let rs = new rita.RiString(newLines);
       let words = rs.words();
       let pos = rs.pos();
       this.getArticleBtn.remove();
@@ -860,8 +832,8 @@ class NewSketch2 extends React.Component {
         flex-flow: column-reverse;
         justify-content: flex-end;
         align-items: center;
-        max-width: 30%;
-        min-width: 30%;
+        max-width: 40%;
+        min-width: 40%;
         padding-top: 10px;
       }
       @media ${Device.tablet} {
@@ -882,6 +854,7 @@ class NewSketch2 extends React.Component {
         align-items: center;
         max-width: 30%;
         min-width: 30%;
+        padding-right: 100px;
         max-height: 50vh;
       }
       @media ${Device.tablet} {

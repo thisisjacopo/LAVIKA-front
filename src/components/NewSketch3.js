@@ -2,15 +2,15 @@ import React from "react";
 import p5 from "p5";
 import "p5/lib/addons/p5.sound";
 import "p5/lib/addons/p5.dom";
-import hhSound from "../samples/hh.wav";
-import kSound from "../samples/k.wav";
-import o1Sound from "../samples/o1.wav";
-import o2Sound from "../samples/o2.wav";
-import o3Sound from "../samples/o3.wav";
-import o4Sound from "../samples/o4.wav";
-import o5Sound from "../samples/o5.wav";
-import o6Sound from "../samples/o6.wav";
-import sSound from "../samples/s.wav";
+import hhSound from "../samples/samples1/hh.wav";
+import kSound from "../samples/samples1/k.wav";
+import o1Sound from "../samples/samples1/o1.wav";
+import o2Sound from "../samples/samples1/o2.wav";
+import o3Sound from "../samples/samples1/o3.wav";
+import o4Sound from "../samples/samples1/o4.wav";
+import o5Sound from "../samples/samples1/o5.wav";
+import o6Sound from "../samples/samples1/o6.wav";
+import sSound from "../samples/samples1/s.wav";
 import rita from "rita";
 import styled from "styled-components";
 import { Device } from "../components/Device";
@@ -19,7 +19,7 @@ import { withAuth } from "../lib/Auth";
 
 
 let scene = {
-  canvas: 2,
+  canvas: 0,
   name: '',
   strokeR: '',
   strokeG: '' ,
@@ -40,7 +40,7 @@ let scene = {
     o6Pat: [0, 0, 0, 0]
   }
  }
-class NewSketch3 extends React.Component {
+class NewSketch extends React.Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
@@ -501,7 +501,7 @@ class NewSketch3 extends React.Component {
       ////////////////////////new sliders
 
       if(self.props.scene) {
-      let {strokeR: rValue, strokeG: gValue, strokeB: bValue} = this.props.scene
+      let {strokeR: rValue, strokeG: gValue, strokeB: bValue, strokeAlpha: alphaValue, strokeBeta: betaValue} = this.props.scene
 
       //R
       strokeR = p.createSlider(0, 250, rValue , 1)
@@ -518,11 +518,11 @@ class NewSketch3 extends React.Component {
       strokeB.parent("#controlsContainer")
       //strokeB.class('blue')
       
-      alphaStroke = p.createSlider(0, 2550, alphaStroke, 1)
+      alphaStroke = p.createSlider(0, 2550, alphaValue, 1)
       alphaStroke.parent("#controlsContainer")
      
 
-      betaStroke = p.createSlider(0, 2500, betaStroke, 1)
+      betaStroke = p.createSlider(0, 2500, betaValue, 1)
       betaStroke.parent("#controlsContainer")
      
       
@@ -687,12 +687,14 @@ class NewSketch3 extends React.Component {
 
     const getArticle = async () => {
       let poem = "";
-      let articleRaw = `http://poetrydb.org//author/Shakespeare;Sonnet`;
+      let articleRaw = `https://newsapi.org/v2/everything?q=music&apiKey=adb3c70aeb8d496d9fd30a6d53b05fce`;
       const response = await fetch(articleRaw);
       const article1 = await response.json();
-      let lines = p.random(article1).lines;
-      lines.forEach((x) => (poem += x));
-      let rs = new rita.RiString(poem);
+      const ranInd = Math.floor(Math.random() * article1.articles.length)
+      let newLines = article1.articles[ranInd].content
+      // let lines = p.random(newLines).lines;
+      // lines.forEach((x) => (poem += x));
+      let rs = new rita.RiString(newLines);
       let words = rs.words();
       let pos = rs.pos();
       this.getArticleBtn.remove();
@@ -860,8 +862,8 @@ class NewSketch3 extends React.Component {
         flex-flow: column-reverse;
         justify-content: flex-end;
         align-items: center;
-        max-width: 30%;
-        min-width: 30%;
+        max-width: 40%;
+        min-width: 40%;
         padding-top: 10px;
       }
       @media ${Device.tablet} {
@@ -882,6 +884,7 @@ class NewSketch3 extends React.Component {
         align-items: center;
         max-width: 30%;
         min-width: 30%;
+        padding-right: 100px;
         max-height: 50vh;
       }
       @media ${Device.tablet} {
@@ -931,4 +934,4 @@ class NewSketch3 extends React.Component {
   }
 }
 
-export default withAuth(NewSketch3);
+export default withAuth(NewSketch);
