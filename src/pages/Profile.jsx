@@ -5,6 +5,8 @@ import axios from "axios";
 import { withAuth } from "./../lib/Auth";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Loader from '../components/Loader'
+
 
 const ProfilePage = styled.div`
       align-items: center;
@@ -131,7 +133,7 @@ class Profile extends Component {
       <ProfilePage>
       <Navigation />
         {!user ? (
-          "loading"
+          <Loader />
         ) : (
           <div>
           <ProfileDiv >

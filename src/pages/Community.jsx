@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Device } from "../components/Device";
 import Navigation from "../components/Navigation";
 import { Link } from "react-router-dom";
+import Loader from '../components/Loader'
 
 class Community extends Component {
   // static contextType = SongsContext;

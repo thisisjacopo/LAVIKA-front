@@ -688,7 +688,10 @@ class NewSketch extends React.Component {
     const getArticle = async () => {
       let poem = "";
       let articleRaw = `https://newsapi.org/v2/everything?q=music&apiKey=adb3c70aeb8d496d9fd30a6d53b05fce`;
-      const response = await fetch(articleRaw);
+      const response = await fetch(articleRaw, {headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Expose-Headers': "Content-Length,API-Key"
+      }});
       const article1 = await response.json();
       const ranInd = Math.floor(Math.random() * article1.articles.length)
       let newLines = article1.articles[ranInd].content

@@ -160,3 +160,8 @@ a:hover, a:active { text-decoration: none; color: transparent }
   .buttonMalo {
     margin: auto 130px;
   }
+
+  .spinner {
+    margin: 20% 40%;
+    width: 300px;
+  }
