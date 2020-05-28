@@ -2,15 +2,15 @@ import React from "react";
 import p5 from "p5";
 import "p5/lib/addons/p5.sound";
 import "p5/lib/addons/p5.dom";
-import hhSound from "../samples/samples1/hh.wav";
-import kSound from "../samples/samples1/k.wav";
-import o1Sound from "../samples/samples1/o1.wav";
-import o2Sound from "../samples/samples1/o2.wav";
-import o3Sound from "../samples/samples1/o3.wav";
-import o4Sound from "../samples/samples1/o4.wav";
-import o5Sound from "../samples/samples1/o5.wav";
-import o6Sound from "../samples/samples1/o6.wav";
-import sSound from "../samples/samples1/s.wav";
+import hhSound from "../samples/samples2/hh.wav";
+import kSound from "../samples/samples2/k.wav";
+import o1Sound from "../samples/samples2/o1.wav";
+import o2Sound from "../samples/samples2/o2.wav";
+import o3Sound from "../samples/samples2/o3.wav";
+import o4Sound from "../samples/samples2/o4.wav";
+import o5Sound from "../samples/samples2/o5.wav";
+import o6Sound from "../samples/samples2/o6.wav";
+import sSound from "../samples/samples2/s.wav";
 import rita from "rita";
 import styled from "styled-components";
 import { Device } from "../components/Device";
@@ -19,7 +19,7 @@ import { withAuth } from "../lib/Auth";
 
 
 let scene = {
-  canvas: 0,
+  canvas: 2,
   name: '',
   strokeR: '',
   strokeG: '' ,
@@ -40,7 +40,7 @@ let scene = {
     o6Pat: [0, 0, 0, 0]
   }
  }
-class NewSketch extends React.Component {
+class NewSketch3 extends React.Component {
   constructor(props) {
     super(props);
     this.myRef = React.createRef();
@@ -294,6 +294,8 @@ class NewSketch extends React.Component {
 
     let alphaStroke, betaStroke;
     let state = 0;
+    let yoff = 0.0; 
+    let offset = 0
     //deleted array of words to replace Chevrolet
 
     //perDist per instrument
@@ -314,12 +316,14 @@ class NewSketch extends React.Component {
     playButton.mousePressed(p.startAudio)
     self.playButton = playButton
 
+    let xoff = 0.0;
+
 
     p.setup = () => {
       p.getAudioContext().suspend();
 
       // CANVAS
-      cnv = p.createCanvas(400, 400);
+      cnv = p.createCanvas(500, 500);
       self.canvas = cnv;
       cnv.mousePressed(p.addIns);
       cnv.parent("#sketchContainer");
@@ -501,7 +505,7 @@ class NewSketch extends React.Component {
       ////////////////////////new sliders
 
       if(self.props.scene) {
-      let {strokeR: rValue, strokeG: gValue, strokeB: bValue, strokeAlpha: alphaValue, strokeBeta: betaValue} = this.props.scene
+      let {strokeR: rValue, strokeG: gValue, strokeB: bValue, alphaStroke: alphaValue, betaStroke: betaValue} = this.props.scene
 
       //R
       strokeR = p.createSlider(0, 250, rValue , 1)
@@ -551,7 +555,7 @@ class NewSketch extends React.Component {
      
       }
       
-    
+      p.background(255, 165, 0)
     };
 
     p.addIns = () => {
@@ -616,14 +620,14 @@ class NewSketch extends React.Component {
     };
 
     p.draw = () => {
-      scene.strokeR = strokeR.value()
-      scene.strokeG = strokeG.value()
-      scene.strokeB = strokeB.value()
-      scene.alphaStroke = alphaStroke.value()
-      scene.betaStroke = betaStroke.value()
-      scene.bpm = bpmCtr.value()
-      
-
+      scene.strokeR = strokeR.value();
+      scene.strokeG = strokeG.value();
+      scene.strokeB = strokeB.value();
+      scene.alphaStroke = alphaStroke.value();
+      scene.betaStroke = betaStroke.value();
+      scene.bpm = bpmCtr.value();
+      let n = p.noise(p.xoff) * p.width * 2;
+     
       // scene.patters
 
       if (!self.state.isLoading) {
@@ -631,57 +635,32 @@ class NewSketch extends React.Component {
           isLoading: false,
         });
       } else {
-        p.frameRate(17);
+        p.frameRate(10);
         // get the overall volume (between 0 and 1.0)
-        let vol = mic.getLevel() * strokeB.value() / 10;
-        self.vol = vol
-        p.fill(strokeB.value());
+        let vol =  mic.getLevel()*1500;
+        self.vol = vol;
         p.noStroke();
         p.smooth();
-        // Draw an ellipse with height based on volume
-        let h = p.map(vol, 0, 1, p.random(1233), 0);
-        p.ellipse((p.width / 1.2) * vol, h - 25, vol * 400, vol * 400);
-        drawPointy(betaStroke.value());
-        drawPointy(10);
-        drawArc();
-        p.background(vol * strokeR.value(), vol * strokeG.value(), vol * strokeB.value(), 7);
+        p.background(20, 25, 20, 50);       
 
-        function drawPointy(weigh) {
-          p.stroke(vol * strokeR.value() );
-          p.smooth();
-          p.strokeWeight(p.random(weigh));
-          p.point(p.random(p.height * 1.6), p.random(p.width * 1.6));
-        }
-
-        function drawArc() {
-          p.arc(
-            p.random(betaStroke.value()),
-            p.random(2000),
-            vol * betaStroke.value()/20,
-            vol * betaStroke.value()/30,
-            vol * betaStroke.value()/24,
-            p.HALF_PI
-          );
-          p.fill(p.random());
-          p.noStroke();
-          p.arc(
-            p.random(vol * 2000),
-            p.random(betaStroke.value()),
-            vol * 444,
-            vol * 444,
-            p.HALF_PI,
-            p.PI
-          );
-          p.arc(vol * 4400, p.random(300), 700, 70, p.PI, p.PI + p.QUARTER_PI);
-          p.arc(
-            vol * alphaStroke.value(),
-            vol * alphaStroke.value(),
-            vol * alphaStroke.value(),
-            vol * alphaStroke.value(),
-            p.PI + p.QUARTER_PI,
-            p.TWO_PI
-          );
-        }
+    //SHAPES
+    p.noStroke()
+    p.rectMode(p.CENTER); // Set rectMode to RADIUS
+    p.fill(p.random(strokeR.value()),p.random(strokeG.value()),p.random(strokeB.value()),p.random(1000)); // Set fill to white
+    p.rect(p.windowWidth / p.random(13), p.windowHeight /p.random(13), vol * 2, vol * 2);
+    p.fill(p.random(alphaStroke.value()),p.random(betaStroke.value()),p.random(240),p.random(1000));
+    p.circle(p.random(500), p.random(500), p.random(130))
+    p.fill(p.random(strokeR.value()),p.random(strokeG.value()),p.random(strokeB.value()),p.random(1000)); // Set fill to white
+    p.ellipse(p.random(520), p.random(530), p.random(55), p.random(35))
+    p.ellipseMode(p.CENTER)
+    p.fill(p.random(240),p.random(240),p.random(240),p.random(1000));
+    p.ellipse(p.random(420), p.random(430), p.random(45), p.random(30))
+    p.fill(p.random(strokeR.value()),p.random(strokeG.value()),p.random(strokeB.value()),p.random(1000)); // Set fill to white
+    p.triangle(p.random(324),p.random(324),p.random(340),p.random(340), p.random(320),p.random(310) )
+    p.fill(p.random(alphaStroke.value()),p.random(betaStroke.value()),p.random(240),p.random(1000));
+    p.square(p.random(360), p.random(360), p.random(80))
+    p.fill(p.random(strokeR.value()),p.random(strokeG.value()),p.random(strokeB.value()),p.random(1000)); // Set fill to white
+    p.arc(p.random(350), p.random(350), p.random(80), p.random(80), p.random(300), p.PI + p.QUARTER_PI)
       }
     };
 
@@ -744,22 +723,23 @@ class NewSketch extends React.Component {
 
     p.saveTheFrame = async ()=>{
 
-    p.saveFrames('out', 'png', 1, 1, data => {
-      scene.capture = data[0].imageData 
-
-      axios.post(process.env.REACT_APP_API_URL + '/scenes/save', scene, { withCredentials: true })
-      .then(res => {
-        console.log(res);
-        // here you would redirect to some other page 
-      })
-      .catch(err => {
-        console.log("Error while adding the thing: ", err);
-    });
-
-    });
-  }
-    self.saveTheFrame = p.saveTheFrame
-  };
+      p.saveFrames('out', 'png', 1, 1, data => {
+        scene.capture = data[0].imageData 
+  
+        axios.post(process.env.REACT_APP_API_URL + '/scenes/save', scene, { withCredentials: true })
+        .then(res => {
+          console.log(res);
+          // here you would redirect to some other page 
+          this.props.savedSceneMessage('saved')
+        })
+        .catch(err => {
+          console.log("Error while adding the thing: ", err);
+      });
+  
+      });
+    }
+      self.saveTheFrame = p.saveTheFrame
+    };
 
   componentWillUnmount() {
     this.canvas.remove();
@@ -788,12 +768,12 @@ class NewSketch extends React.Component {
     axios.put(process.env.REACT_APP_API_URL + '/scenes/update', scene, { withCredentials: true })
     .then(res => {
       console.log(res);
-      // here you would redirect to some other page 
+      this.props.savedSceneMessage('updated')
     })
     .catch(err => {
       console.log("Error while adding the thing: ", err);
   });
-    // await this.saveTheFrame()
+   
   }
 
   toggleControls=()=>{
@@ -810,97 +790,102 @@ class NewSketch extends React.Component {
 
   render() {
     const MainDiv = styled.div`
-      @media ${Device.laptop} {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        ${"" /* align-items: center; */}
-        padding: 0 2.5%;
-        min-height: 80vh;
-      }
-      @media ${Device.tablet} {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        padding: 0 0.5%;
-      }
-      @media ${Device.mobile} {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        padding: 0;
-        align-items: center;
-      }
-    `;
+    @media ${Device.laptop} {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 0 auto;
+      min-height: 80vh;
+    }
+    @media ${Device.tablet} {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 0.5%;
+    }
+    @media ${Device.mobile} {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0;
+      align-items: center;
+    }
+  `;
 
-    const LyricContainer = styled.div`
-      @media ${Device.laptop} {
-        display: flex;
-        flex-flow: column;
-        justify-content: space-around;
-        align-items: center;
-        max-width: 30%;
-        min-width: 30%;
-        max-height: 400px;
-        overflow-y: scroll;
-      }
-      @media ${Device.tablet} {
-        width: 100%;
-        background-color: blue;
-      }
-      @media ${Device.mobile} {
-        width: 100%;
-        background-color: yellow;
-      }
-    `;
+  const LyricContainer = styled.div`
+    @media ${Device.laptop} {
+      display: flex;
+      flex-flow: column;
+      font-family: courier;
+      color: white;
+      justify-content: space-around;
+      align-items: center;
+      max-width: 25%;
+      min-width: 25%;
+      margin-top: 10%;
+      max-height: 400px;
+      overflow-y: scroll;
+    }
+    @media ${Device.tablet} {
+      width: 100%;
+      background-color: blue;
+    }
+    @media ${Device.mobile} {
+      width: 100%;
+      background-color: yellow;
+    }
+  `;
 
-    const SketchContainer = styled.div`
-      @media ${Device.laptop} {
-        display: flex;
-        flex-flow: column-reverse;
-        justify-content: flex-end;
-        align-items: center;
-        max-width: 40%;
-        min-width: 40%;
-        padding-top: 10px;
-      }
-      @media ${Device.tablet} {
-        width: 100%;
-        background-color: blue;
-      }
-      @media ${Device.mobile} {
-        width: 100%;
-        background-color: yellow;
-      }
-    `;
+  const SketchContainer = styled.div`
+    @media ${Device.laptop} {
+      display: flex;
+      flex-flow: column-reverse;
+      justify-content: flex-end;
+      align-items: center;
+      max-width: 40%;
+      min-width: 40%;
+    }
+    @media ${Device.tablet} {
+      width: 100%;
+      background-color: blue;
+    }
+    @media ${Device.mobile} {
+      width: 100%;
+      background-color: yellow;
+    }
+  `;
 
-    const ControlsContainer = styled.div`
-      @media ${Device.laptop} {
-        display: flex;
-        flex-flow: column;
-        justify-content: space-around;
-        align-items: center;
-        max-width: 30%;
-        min-width: 30%;
-        padding-right: 100px;
-        max-height: 50vh;
-      }
-      @media ${Device.tablet} {
-        width: 100%;
-        display: flex;
-        flex-flow: column;
-        justify-content: space-around;
-        align-items: center;
-        max-width: 97.5%;
-        min-width: 97.5%;
-      }
-      @media ${Device.mobile} {
-        max-width: 100%%;
-        min-width: 100%%;
-      }
-    `;
+  const ControlsContainer = styled.div`
+    @media ${Device.laptop} {
+      display: flex;
+      flex-flow: column;
+      justify-content: space-around;
+      margin-top: 10%;
+      align-items: center;
+      max-width: 25%;
+      min-width: 25%;
+      padding-right: 25px;
+      max-height: 50vh;
+    }
+    @media ${Device.tablet} {
+      width: 100%;
+      display: flex;
+      flex-flow: column;
+      justify-content: space-around;
+      align-items: center;
+      max-width: 97.5%;
+      min-width: 97.5%;
+    }
+    @media ${Device.mobile} {
+      max-width: 100%%;
+      min-width: 100%%;
+    }
+  `;
+
+
+
 
 
 
@@ -910,17 +895,12 @@ class NewSketch extends React.Component {
          <MainDiv className="containerDiv">
           <LyricContainer className="lyricContainer" id="lyricContainer" />
           <SketchContainer className="sketchContainer" id="sketchContainer">
-         
        {
          this.isTheArtist()
          ?  <button onClick={this.updateScene}>Update scene</button>
          : <button onClick={this.saveScene}>Save scene</button>
        }  
-       {
-        this.state.saved
-         ? <div> <h1 style={{color:'white'}}>Saved!</h1>  </div>
-         :null
-       }
+     
             
             </SketchContainer>
 
@@ -934,4 +914,4 @@ class NewSketch extends React.Component {
   }
 }
 
-export default withAuth(NewSketch);
+export default withAuth(NewSketch3);

@@ -9,6 +9,11 @@ import styled from "styled-components";
 const ProfilePage = styled.div`
       align-items: center;
       color: black;
+
+      .buttonMalo {
+        padding: 2px;
+        padding-top: 0;
+      }
 `
 const ScenesDiv = styled.div`
 margin-top: 7%;
@@ -152,7 +157,7 @@ class Profile extends Component {
                      <Link to={`/xp/${scene._id}`}> 
                       <h2 className="nameScene">{scene.name}</h2>
                      </Link> 
-                      <button className="buttonMalo" onClick={()=>{this.handleDelete(scene._id)}}>X</button>
+                      <button className="buttonMalo" onClick={()=>{this.handleDelete(scene._id)}}>x</button>
                       </SceneText>
                     </ScenesCards> 
                   )

@@ -124,7 +124,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .nameScene{
-  font-family: 'Courier New', Courier, monospace;
+  font-family: Mantra;
   padding-top: 40%;
   font-size: 27px;
   color: white;

@@ -323,7 +323,7 @@ class NewSketch2 extends React.Component {
       p.getAudioContext().suspend();
 
       // CANVAS
-      cnv = p.createCanvas(400, 400);
+      cnv = p.createCanvas(500, 500);
       self.canvas = cnv;
       cnv.mousePressed(p.addIns);
       cnv.parent("#sketchContainer");
@@ -505,7 +505,7 @@ class NewSketch2 extends React.Component {
       ////////////////////////new sliders
 
       if(self.props.scene) {
-      let {strokeR: rValue, strokeG: gValue, strokeB: bValue, strokeAlpha: alphaValue, strokeBeta: betaValue} = this.props.scene
+      let {strokeR: rValue, strokeG: gValue, strokeB: bValue, alphaStroke: alphaValue, betaStroke: betaValue} = this.props.scene
 
       //R
       strokeR = p.createSlider(0, 250, rValue , 1)
@@ -714,22 +714,23 @@ class NewSketch2 extends React.Component {
 
     p.saveTheFrame = async ()=>{
 
-    p.saveFrames('out', 'png', 1, 1, data => {
-      scene.capture = data[0].imageData 
-
-      axios.post(process.env.REACT_APP_API_URL + '/scenes/save', scene, { withCredentials: true })
-      .then(res => {
-        console.log(res);
-        // here you would redirect to some other page 
-      })
-      .catch(err => {
-        console.log("Error while adding the thing: ", err);
-    });
-
-    });
-  }
-    self.saveTheFrame = p.saveTheFrame
-  };
+      p.saveFrames('out', 'png', 1, 1, data => {
+        scene.capture = data[0].imageData 
+  
+        axios.post(process.env.REACT_APP_API_URL + '/scenes/save', scene, { withCredentials: true })
+        .then(res => {
+          console.log(res);
+          // here you would redirect to some other page 
+          this.props.savedSceneMessage('saved')
+        })
+        .catch(err => {
+          console.log("Error while adding the thing: ", err);
+      });
+  
+      });
+    }
+      self.saveTheFrame = p.saveTheFrame
+    };
 
   componentWillUnmount() {
     this.canvas.remove();
@@ -758,12 +759,12 @@ class NewSketch2 extends React.Component {
     axios.put(process.env.REACT_APP_API_URL + '/scenes/update', scene, { withCredentials: true })
     .then(res => {
       console.log(res);
-      // here you would redirect to some other page 
+      this.props.savedSceneMessage('updated')
     })
     .catch(err => {
       console.log("Error while adding the thing: ", err);
   });
-    // await this.saveTheFrame()
+   
   }
 
   toggleControls=()=>{
@@ -780,97 +781,102 @@ class NewSketch2 extends React.Component {
 
   render() {
     const MainDiv = styled.div`
-      @media ${Device.laptop} {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        ${"" /* align-items: center; */}
-        padding: 0 2.5%;
-        min-height: 80vh;
-      }
-      @media ${Device.tablet} {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        padding: 0 0.5%;
-      }
-      @media ${Device.mobile} {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        align-items: center;
-        padding: 0;
-        align-items: center;
-      }
-    `;
+    @media ${Device.laptop} {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 0 auto;
+      min-height: 80vh;
+    }
+    @media ${Device.tablet} {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 0.5%;
+    }
+    @media ${Device.mobile} {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0;
+      align-items: center;
+    }
+  `;
 
-    const LyricContainer = styled.div`
-      @media ${Device.laptop} {
-        display: flex;
-        flex-flow: column;
-        justify-content: space-around;
-        align-items: center;
-        max-width: 30%;
-        min-width: 30%;
-        max-height: 400px;
-        overflow-y: scroll;
-      }
-      @media ${Device.tablet} {
-        width: 100%;
-        background-color: blue;
-      }
-      @media ${Device.mobile} {
-        width: 100%;
-        background-color: yellow;
-      }
-    `;
+  const LyricContainer = styled.div`
+    @media ${Device.laptop} {
+      display: flex;
+      flex-flow: column;
+      font-family: courier;
+      color: white;
+      justify-content: space-around;
+      align-items: center;
+      max-width: 25%;
+      min-width: 25%;
+      margin-top: 10%;
+      max-height: 400px;
+      overflow-y: scroll;
+    }
+    @media ${Device.tablet} {
+      width: 100%;
+      background-color: blue;
+    }
+    @media ${Device.mobile} {
+      width: 100%;
+      background-color: yellow;
+    }
+  `;
 
-    const SketchContainer = styled.div`
-      @media ${Device.laptop} {
-        display: flex;
-        flex-flow: column-reverse;
-        justify-content: flex-end;
-        align-items: center;
-        max-width: 40%;
-        min-width: 40%;
-        padding-top: 10px;
-      }
-      @media ${Device.tablet} {
-        width: 100%;
-        background-color: blue;
-      }
-      @media ${Device.mobile} {
-        width: 100%;
-        background-color: yellow;
-      }
-    `;
+  const SketchContainer = styled.div`
+    @media ${Device.laptop} {
+      display: flex;
+      flex-flow: column-reverse;
+      justify-content: flex-end;
+      align-items: center;
+      max-width: 40%;
+      min-width: 40%;
+    }
+    @media ${Device.tablet} {
+      width: 100%;
+      background-color: blue;
+    }
+    @media ${Device.mobile} {
+      width: 100%;
+      background-color: yellow;
+    }
+  `;
 
-    const ControlsContainer = styled.div`
-      @media ${Device.laptop} {
-        display: flex;
-        flex-flow: column;
-        justify-content: space-around;
-        align-items: center;
-        max-width: 30%;
-        min-width: 30%;
-        padding-right: 100px;
-        max-height: 50vh;
-      }
-      @media ${Device.tablet} {
-        width: 100%;
-        display: flex;
-        flex-flow: column;
-        justify-content: space-around;
-        align-items: center;
-        max-width: 97.5%;
-        min-width: 97.5%;
-      }
-      @media ${Device.mobile} {
-        max-width: 100%%;
-        min-width: 100%%;
-      }
-    `;
+  const ControlsContainer = styled.div`
+    @media ${Device.laptop} {
+      display: flex;
+      flex-flow: column;
+      justify-content: space-around;
+      margin-top: 10%;
+      align-items: center;
+      max-width: 25%;
+      min-width: 25%;
+      padding-right: 25px;
+      max-height: 50vh;
+    }
+    @media ${Device.tablet} {
+      width: 100%;
+      display: flex;
+      flex-flow: column;
+      justify-content: space-around;
+      align-items: center;
+      max-width: 97.5%;
+      min-width: 97.5%;
+    }
+    @media ${Device.mobile} {
+      max-width: 100%%;
+      min-width: 100%%;
+    }
+  `;
+
+
+
 
 
 
@@ -880,17 +886,12 @@ class NewSketch2 extends React.Component {
          <MainDiv className="containerDiv">
           <LyricContainer className="lyricContainer" id="lyricContainer" />
           <SketchContainer className="sketchContainer" id="sketchContainer">
-         
        {
          this.isTheArtist()
          ?  <button onClick={this.updateScene}>Update scene</button>
          : <button onClick={this.saveScene}>Save scene</button>
        }  
-       {
-        this.state.saved
-         ? <div> <h1 style={{color:'white'}}>Saved!</h1>  </div>
-         :null
-       }
+     
             
             </SketchContainer>
 

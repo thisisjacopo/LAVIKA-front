@@ -68,7 +68,7 @@ class Community extends Component {
     background: rgba(200, 200, 200, 0.72);
     color: #fff;
     position: absolute;
-    font-family: Mantra;
+    font-family: courier;
     display:flex;
     flex-direction: row;
     transition: 0.5s;
@@ -106,20 +106,6 @@ class Community extends Component {
           text-align: center;
           
         `;
-       
-        const Mail = styled.h3`
-        font-family: Mantra;
-        font-size: 1rem;
-        color: white;
-        margin-top: 2rem;
-      `;
-        const Info = styled.h3`
-      font-family: Mantra;
-      font-size: 3rem;
-      color: black;
-      margin-bottom: 3rem;
-      margin-top: 3rem;
-    `;
     return (
       <div>
       <Navigation />

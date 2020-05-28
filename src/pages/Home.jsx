@@ -22,22 +22,24 @@ function Home() {
   `;
 
   const HomeBtn = styled.button`
-  color: rgb(105, 5, 30);
-  border: 2px solid rgb(105, 5, 30);
+  color: black;
+  border: 2px solid black;
   display: flex;
-  font-family: Mantra;
-  margin-top: 15%;
-  width: 12rem;
-  height: 12rem;
+  font-family: courier;
+  margin-top: 30%;
+  width: 8rem;
+  height: 8rem;
   border-radius: 50%;
   text-align: center;
   cursor: pointer;
   justify-content: center;
   font-weight: 800;
-  font-size: 2rem;
+  font-size: 1rem;
+  transition: 0.5s;
   :hover{
     color:white;
-    background-color: rgb(105, 5, 30);
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none
   }
   `
 
@@ -61,7 +63,7 @@ function Home() {
     <HomeCointainer>
       <Title>Lavika</Title>
       <Link to={"/private"} id="xp-btn">
-             <HomeBtn >ENTER</HomeBtn> 
+             <HomeBtn>enter</HomeBtn> 
             </Link>
     </HomeCointainer>
   );
