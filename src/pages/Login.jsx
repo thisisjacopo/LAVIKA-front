@@ -12,10 +12,10 @@ const LoginPage = styled.div`
   align-items: center;
   justify-items: center;
   justify-content: space-around;
-  letter-spacing:2px;
+  letter-spacing: 2px;
 
-  h1{
-    font-size:4rem;
+  h1 {
+    font-size: 4rem;
     font-weight: 200rem;
   }
   p {
@@ -43,7 +43,7 @@ const Label = styled.label`
   text-align: center;
 `;
 const Input = styled.input`
-margin: 1rem;
+  margin: 1rem;
   background: none;
   font-size: 2rem;
   color: #272727;
@@ -57,7 +57,7 @@ margin: 1rem;
 const LoginInput = styled.input`
   background: none;
   font-size: 2rem;
-  color: #6A041D;
+  color: #6a041d;
   border: 2px solid black;
   align-items: center;
   justify-items: center;
@@ -66,28 +66,60 @@ const LoginInput = styled.input`
   width: 8rem;
   height: 3rem;
   cursor: pointer;
-  :hover{
+  :hover {
     background-color: white;
-    color: #6A041D;
+    color: #6a041d;
   }
 `;
 
+
+const initialState = {
+  username: "", password: "", usernameError: "", passwordError: ""
+}
 class Login extends Component {
-  state = { username: "", password: "" };
+
+  state = initialState;
+
+  validate = () => {
+      let usernameError= ""; 
+      let passwordError= "";
+
+      if (!this.state.username || this.state.username < 4) {
+        usernameError = 'Please entert a valid username'
+      }
+
+      if (!this.state.password || this.state.password < 4) {
+        passwordError = 'Please entert a valid password'
+      }
+
+      if (usernameError || passwordError) {
+        this.setState({usernameError, passwordError});
+        return false
+      }
+
+      return true
+  }
 
   handleFormSubmit = (event) => {
     event.preventDefault();
     const { username, password } = this.state;
-
+    const isValid = this.validate()
     this.props.login(username, password);
     // this.props.login method is coming from the AuthProvider
     // injected by the withAuth() HOC
+    if(isValid){
+      console.log(this.state)
+      //clearing form here
+      this.setState(initialState)
+    }
   };
 
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
+
+ 
 
   render() {
     const { username, password } = this.state;
@@ -106,7 +138,7 @@ class Login extends Component {
             value={username}
             onChange={this.handleChange}
           />
-
+          {this.state.nameError ? <div>{this.state.nameError}</div> : null}
           <Label>Password:</Label>
           <Input
             type="password"
@@ -114,6 +146,7 @@ class Login extends Component {
             value={password}
             onChange={this.handleChange}
           />
+          {this.state.nameError ? <div>{this.state.passwordError}</div> : null}
 
           <LoginInput type="submit" value="Login" />
         </LoginForm>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withAuth } from "../lib/Auth";
 import styled from "styled-components";
-import { Device } from "../components/Device";
+import { Device } from "./Device";
 
 const Nav = styled.nav`
   @media ${Device.laptop} {

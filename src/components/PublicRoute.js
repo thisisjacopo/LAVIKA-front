@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { withAuth } from './../lib/Auth';
+import { withAuth } from '../lib/Auth';
 
 function PublicRoute(props) {
 
