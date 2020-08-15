@@ -72,45 +72,46 @@ const LoginInput = styled.input`
   }
 `;
 
-
 const initialState = {
-  username: "", password: "", usernameError: "", passwordError: ""
-}
+  username: "",
+  password: "",
+  usernameError: "",
+  passwordError: "",
+};
 class Login extends Component {
-
   state = initialState;
 
   validate = () => {
-      let usernameError= ""; 
-      let passwordError= "";
+    let usernameError = "";
+    let passwordError = "";
 
-      if (!this.state.username || this.state.username < 4) {
-        usernameError = 'Please entert a valid username'
-      }
+    if (!this.state.username || this.state.username < 4) {
+      usernameError = "Please entert a valid username";
+    }
 
-      if (!this.state.password || this.state.password < 4) {
-        passwordError = 'Please entert a valid password'
-      }
+    if (!this.state.password || this.state.password < 4) {
+      passwordError = "Please entert a valid password";
+    }
 
-      if (usernameError || passwordError) {
-        this.setState({usernameError, passwordError});
-        return false
-      }
+    if (usernameError || passwordError) {
+      this.setState({ usernameError, passwordError });
+      return false;
+    }
 
-      return true
-  }
+    return true;
+  };
 
   handleFormSubmit = (event) => {
     event.preventDefault();
     const { username, password } = this.state;
-    const isValid = this.validate()
+    const isValid = this.validate();
     this.props.login(username, password);
     // this.props.login method is coming from the AuthProvider
     // injected by the withAuth() HOC
-    if(isValid){
-      console.log(this.state)
+    if (isValid) {
+      console.log(this.state);
       //clearing form here
-      this.setState(initialState)
+      this.setState(initialState);
     }
   };
 
@@ -118,8 +119,6 @@ class Login extends Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
-
- 
 
   render() {
     const { username, password } = this.state;
@@ -138,7 +137,9 @@ class Login extends Component {
             value={username}
             onChange={this.handleChange}
           />
-          {this.state.nameError ? <div>{this.state.nameError}</div> : null}
+          {this.state.usernameError ? (
+            <div>{this.state.usernameError}</div>
+          ) : null}
           <Label>Password:</Label>
           <Input
             type="password"
@@ -146,7 +147,9 @@ class Login extends Component {
             value={password}
             onChange={this.handleChange}
           />
-          {this.state.nameError ? <div>{this.state.passwordError}</div> : null}
+          {this.state.passwordError ? (
+            <div>{this.state.passwordError}</div>
+          ) : null}
 
           <LoginInput type="submit" value="Login" />
         </LoginForm>

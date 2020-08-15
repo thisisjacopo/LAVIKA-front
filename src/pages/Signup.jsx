@@ -71,16 +71,55 @@ const SignupInput = styled.input`
   }
 `;
 
+const initialState = {
+  username: "",
+  email: "",
+  password: "",
+  usernameError: "",
+  emailError: "",
+  passwordError: "",
+};
 class Signup extends Component {
-  state = { username: "", email: "", password: "" };
+  state = initialState;
+
+  validate = () => {
+    let usernameError = "";
+    let emailError = "";
+    let passwordError = "";
+
+    if (!this.state.username || this.state.username < 4) {
+      usernameError = "Please entert a valid username";
+    }
+
+    if (!this.state.password || this.state.password < 4) {
+      passwordError = "Please entert a valid password";
+    }
+
+    if (!this.state.email.inclued("@") || this.state.email < 4) {
+      emailError = "Please enter a valid and 4 digits minimum long password";
+    }
+
+    if (usernameError || passwordError || emailError) {
+      this.setState({ usernameError, passwordError, emailError });
+      return false;
+    }
+
+    return true;
+  };
 
   handleFormSubmit = (event) => {
     event.preventDefault();
     const { username, email, password } = this.state;
-
+    const isValid = this.validate();
     this.props.signup(username, email, password);
     // this.props.signup method is coming from the AuthProvider
     // injected by the withAuth() HOC
+
+    if (isValid) {
+      console.log(this.state);
+      //clearing form here
+      this.setState(initialState);
+    }
   };
 
   handleChange = (event) => {
@@ -103,6 +142,9 @@ class Signup extends Component {
             value={username}
             onChange={this.handleChange}
           />
+          {this.state.usernameError ? (
+            <div>{this.state.usernameError}</div>
+          ) : null}
 
           <Label>Email:</Label>
           <Input
@@ -111,6 +153,7 @@ class Signup extends Component {
             value={email}
             onChange={this.handleChange}
           />
+          {this.state.emailError ? <div>{this.state.emailError}</div> : null}
 
           <Label>Password:</Label>
           <Input
@@ -119,6 +162,9 @@ class Signup extends Component {
             value={password}
             onChange={this.handleChange}
           />
+          {this.state.passwordError ? (
+            <div>{this.state.passwordError}</div>
+          ) : null}
 
           <SignupInput type="submit" value="Signup" />
         </SignupForm>
